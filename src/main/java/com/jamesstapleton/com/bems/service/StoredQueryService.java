@@ -3,23 +3,17 @@ package com.jamesstapleton.com.bems.service;
 
 import com.jamesstapleton.com.bems.model.DocumentContext;
 import com.jamesstapleton.com.bems.model.StoredQuery;
+import com.jamesstapleton.com.bems.model.UserContext;
 import org.springframework.context.expression.MapAccessor;
 import org.springframework.expression.spel.support.StandardEvaluationContext;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
 public class StoredQueryService {
-    Map<String, StoredQuery>  queries = new HashMap<>();
-
-    public StoredQuery save(String expression) {
-        return save(StoredQuery.parseFromString(expression));
-    }
+    Map<String, StoredQuery> queries = new HashMap<>();
 
     public StoredQuery save(StoredQuery query) {
         queries.put(query.getId(), query);
@@ -32,11 +26,16 @@ public class StoredQueryService {
     }
 
     public List<StoredQuery> findMatches(DocumentContext documentContext) {
-        var context = new StandardEvaluationContext();
-        context.addPropertyAccessor(new MapAccessor());
-
+        UserContext userContext = getUserContext();
         return queries.values().stream()
-                .filter(x -> x.getExpression().getValue(context, documentContext.getCtx(), Boolean.class))
+                .filter(i -> i.getRule().matches(documentContext))
+                .filter(i ->
+                        i.getMetadata().getVisibilities().stream()
+                                .anyMatch(v -> userContext.getAuthorizations().contains(v)))
                 .collect(Collectors.toList());
+    }
+
+    private UserContext getUserContext() {
+        return new UserContext(Set.of("A", "B", "C"));
     }
 }

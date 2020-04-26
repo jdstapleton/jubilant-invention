@@ -1,5 +1,6 @@
 package com.jamesstapleton.com.bems.model;
 
+import com.jamesstapleton.com.bems.boolexp.Rule;
 import org.springframework.expression.Expression;
 import org.springframework.expression.ExpressionParser;
 import org.springframework.expression.spel.standard.SpelExpressionParser;
@@ -9,30 +10,37 @@ import java.util.UUID;
 public class StoredQuery {
     private static final ExpressionParser parser = new SpelExpressionParser();
     private final String id;
-    private final Expression expression;
+    private final Rule rule;
+    private final Metadata metadata;
 
-    public StoredQuery(String id, Expression expression) {
+    public StoredQuery(Rule rule, Metadata metadata) {
+        this(UUID.randomUUID().toString(), rule, metadata);
+    }
+
+    public StoredQuery(String id, Rule rule, Metadata metadata) {
         this.id = id;
-        this.expression = expression;
+        this.rule = rule;
+        this.metadata = metadata;
     }
 
     public String getId() {
         return id;
     }
 
-    public Expression getExpression() {
-        return expression;
+    public Metadata getMetadata() {
+        return metadata;
     }
 
-    public String getExpressionString() {
-        return expression.getExpressionString();
+    public Rule getRule() {
+        return rule;
     }
 
-    public static StoredQuery parseFromString(String expression) {
-        return parseFromString(UUID.randomUUID().toString(), expression);
-    }
-
-    public static StoredQuery parseFromString(String id, String expression) {
-        return new StoredQuery(id, parser.parseExpression(expression));
+    @Override
+    public String toString() {
+        return "StoredQuery{" +
+                "id='" + id + '\'' +
+                ", rule=" + rule +
+                ", metadata=" + metadata +
+                '}';
     }
 }
