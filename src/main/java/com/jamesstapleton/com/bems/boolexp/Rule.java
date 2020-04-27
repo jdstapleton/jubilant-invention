@@ -1,8 +1,6 @@
 package com.jamesstapleton.com.bems.boolexp;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.jamesstapleton.com.bems.model.DocumentContext;
 
 import java.util.Arrays;
@@ -19,7 +17,7 @@ public class Rule {
         /**
          * Ors of Ands
          */
-        BNF
+        DNF
     }
     @JsonProperty
     private final Mode mode;
@@ -55,8 +53,8 @@ public class Rule {
     }
 
     @SafeVarargs
-    public static Rule createBNF(List<Term>... terms) {
-        return new Rule(Mode.BNF, Arrays.asList(terms));
+    public static Rule createDNF(List<Term>... terms) {
+        return new Rule(Mode.DNF, Arrays.asList(terms));
     }
 
     @Override
