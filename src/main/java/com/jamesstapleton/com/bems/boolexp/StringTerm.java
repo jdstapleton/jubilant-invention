@@ -1,19 +1,30 @@
 package com.jamesstapleton.com.bems.boolexp;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.jamesstapleton.com.bems.model.DocumentContext;
 
 import java.util.Collection;
+import java.util.Objects;
 import java.util.Set;
 
 public class StringTerm implements Term {
     public enum Operator {
         EQ
     }
+    @JsonProperty
     private final String field;
+
+    @JsonSerialize(using = SpecializedSetJsonMarshaller.Serializer.class)
+    @JsonProperty
     private final Set<String> value;
+    @JsonProperty
     private final Operator op;
 
-    public StringTerm(String field, Set<String> value, Operator op) {
+    @JsonCreator
+    public StringTerm(String field, @JsonDeserialize(using = SpecializedSetJsonMarshaller.Deserializer.class)  Set<String> value, Operator op) {
         this.field = field;
         this.value = value;
         this.op = op;
@@ -42,6 +53,21 @@ public class StringTerm implements Term {
         } else {
             return null;
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        StringTerm that = (StringTerm) o;
+        return Objects.equals(field, that.field) &&
+                Objects.equals(value, that.value) &&
+                op == that.op;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(field, value, op);
     }
 
     @Override

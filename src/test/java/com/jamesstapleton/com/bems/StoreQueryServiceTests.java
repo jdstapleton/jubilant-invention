@@ -5,6 +5,7 @@ import com.jamesstapleton.com.bems.boolexp.Term;
 import com.jamesstapleton.com.bems.model.DocumentContext;
 import com.jamesstapleton.com.bems.model.Metadata;
 import com.jamesstapleton.com.bems.model.StoredQuery;
+import com.jamesstapleton.com.bems.repositories.StoredQueryRepository;
 import com.jamesstapleton.com.bems.service.StoredQueryService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,7 +17,7 @@ import java.util.Set;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class StoreQueryServiceTests {
-    StoredQueryService sqs = new StoredQueryService();
+    StoredQueryService sqs = new StoredQueryService(new StoredQueryRepository());
     final static StoredQuery Q1 = new StoredQuery(Rule.createCNF(List.of(Term.of("a", "hello"))), new Metadata(Set.of("A")));
     final static StoredQuery Q2 = new StoredQuery(Rule.createCNF(List.of(Term.of("a", "hello")), List.of(
             Term.of("a", "world"),

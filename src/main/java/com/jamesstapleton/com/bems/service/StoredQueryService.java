@@ -4,8 +4,8 @@ package com.jamesstapleton.com.bems.service;
 import com.jamesstapleton.com.bems.model.DocumentContext;
 import com.jamesstapleton.com.bems.model.StoredQuery;
 import com.jamesstapleton.com.bems.model.UserContext;
-import org.springframework.context.expression.MapAccessor;
-import org.springframework.expression.spel.support.StandardEvaluationContext;
+import com.jamesstapleton.com.bems.repositories.StoredQueryRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -13,22 +13,24 @@ import java.util.stream.Collectors;
 
 @Service
 public class StoredQueryService {
-    Map<String, StoredQuery> queries = new HashMap<>();
+    private final StoredQueryRepository storedQueryRepository;
+
+    @Autowired
+    public StoredQueryService(StoredQueryRepository storedQueryRepository) {
+        this.storedQueryRepository = storedQueryRepository;
+    }
 
     public StoredQuery save(StoredQuery query) {
-        queries.put(query.getId(), query);
-
-        return query;
+        return storedQueryRepository.save(query);
     }
 
     public Optional<StoredQuery> findById(String id) {
-        return Optional.ofNullable(queries.get(id));
+        return storedQueryRepository.findById(id);
     }
 
     public List<StoredQuery> findMatches(DocumentContext documentContext) {
         UserContext userContext = getUserContext();
-        return queries.values().stream()
-                .filter(i -> i.getRule().matches(documentContext))
+        return storedQueryRepository.findMatches(documentContext).stream()
                 .filter(i ->
                         i.getMetadata().getVisibilities().stream()
                                 .anyMatch(v -> userContext.getAuthorizations().contains(v)))

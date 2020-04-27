@@ -1,0 +1,25 @@
+{
+  "id" : "xyz",
+  "rule" : {
+    "mode" : "CNF",
+    "clauses" : [ [ {
+      "type" : ".StringTerm",
+      "field" : "b",
+      "value" : "pepper",
+      "op" : "EQ"
+    } ], [ {
+      "type" : ".StringTerm",
+      "field" : "b",
+      "value" : [ "cheese", "eggs" ],
+      "op" : "EQ"
+    }, {
+      "type" : ".StringTerm",
+      "field" : "a",
+      "value" : "hello",
+      "op" : "EQ"
+    } ] ]
+  },
+  "metadata" : {
+    "visibilities" : [ "C" ]
+  }
+}

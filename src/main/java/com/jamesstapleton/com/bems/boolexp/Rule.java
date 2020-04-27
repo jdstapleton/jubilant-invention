@@ -1,9 +1,13 @@
 package com.jamesstapleton.com.bems.boolexp;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.jamesstapleton.com.bems.model.DocumentContext;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class Rule {
@@ -17,7 +21,9 @@ public class Rule {
          */
         BNF
     }
+    @JsonProperty
     private final Mode mode;
+    @JsonProperty
     private final List<List<Term>> clauses;
 
     public Rule(Mode mode, List<List<Term>> operands) {
@@ -51,6 +57,20 @@ public class Rule {
     @SafeVarargs
     public static Rule createBNF(List<Term>... terms) {
         return new Rule(Mode.BNF, Arrays.asList(terms));
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Rule rule = (Rule) o;
+        return mode == rule.mode &&
+                Objects.equals(clauses, rule.clauses);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(mode, clauses);
     }
 
     @Override
