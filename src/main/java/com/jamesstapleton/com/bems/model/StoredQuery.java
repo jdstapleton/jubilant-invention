@@ -3,15 +3,12 @@ package com.jamesstapleton.com.bems.model;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.jamesstapleton.com.bems.boolexp.Rule;
-import org.springframework.expression.ExpressionParser;
-import org.springframework.expression.spel.standard.SpelExpressionParser;
 
 import java.util.Objects;
 import java.util.UUID;
 
 
 public class StoredQuery {
-    private static final ExpressionParser parser = new SpelExpressionParser();
     @JsonProperty
     private final String id;
     @JsonProperty
