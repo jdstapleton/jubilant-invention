@@ -11,6 +11,8 @@ import org.springframework.util.StreamUtils;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
 import java.util.List;
 import java.util.Set;
 
@@ -20,7 +22,8 @@ public class StoredQuerySerializationTests {
     private static final String SAMPLE_CNF_JSON = readResource("/sample-cnf.json");
     private static final StoredQuery SAMPLE_QUERY = new StoredQuery("xyz", Rule.createCNF(List.of(Term.of("b", "pepper")), List.of(
             Term.of("b", "eggs", "cheese"),
-            Term.of("a", "hello")
+            Term.of("a", "hello"),
+            Term.after("date", OffsetDateTime.of(2020, 4, 1, 16, 8, 0, 0, ZoneOffset.UTC))
     )), new Metadata(Set.of("C")));
 
     private static final ObjectMapper mapper = new ObjectMapper().findAndRegisterModules();

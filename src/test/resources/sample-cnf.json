@@ -17,6 +17,11 @@
       "field" : "a",
       "value" : "hello",
       "op" : "EQ"
+    }, {
+      "type" : ".DateTimeTerm",
+      "field" : "date",
+      "value" : "2020-04-01T16:08:00Z",
+      "op" : "AFTER"
     } ] ]
   },
   "metadata" : {
