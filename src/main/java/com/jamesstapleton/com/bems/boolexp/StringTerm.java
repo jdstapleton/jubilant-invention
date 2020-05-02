@@ -6,17 +6,29 @@ import com.jamesstapleton.com.bems.Model;
 import com.jamesstapleton.com.bems.model.DocumentContext;
 import org.immutables.value.Value;
 
-import java.util.Collection;
 import java.util.Set;
 
 @Value.Immutable
 @Model
 public abstract class StringTerm implements Term {
-    public enum Operator {
-        /**
-         * EQ to empty or no value requires the term to exist as well as being empty
-         */
-        EQ
+    @Override
+    public boolean matches(DocumentContext context) {
+        var ctxValue = context.getSetAs(getField(), String.class);
+
+        if (ctxValue == null) {
+            return false;
+        }
+
+        switch (getOp()) {
+            case EQ:
+                return valueEq(ctxValue);
+            case STARTS_WITH:
+                return valueStartsWith(ctxValue);
+            case ENDS_WITH:
+                return valueEndsWith(ctxValue);
+        }
+
+        return false;
     }
 
     public static StringTerm eq(String field, String... value) {
@@ -35,13 +47,9 @@ public abstract class StringTerm implements Term {
 
     public abstract Operator getOp();
 
-    @Override
-    public boolean matches(DocumentContext context) {
-        var ctxValue = getValue(context);
-        if (ctxValue == null) {
-            return false;
-        }
+    public abstract StringTerm withField(String newFieldName);
 
+    private boolean valueEq(Set<String> ctxValue) {
         if (getValue().isEmpty()) {
             return ctxValue.isEmpty()
                     || (ctxValue.size() == 1 && ctxValue.stream().findFirst().orElse("").isEmpty());
@@ -50,22 +58,29 @@ public abstract class StringTerm implements Term {
         return ctxValue.stream().anyMatch(getValue()::contains);
     }
 
+    private boolean valueEndsWith(Set<String> ctxValue) {
+        // naive implementation (should build a tree)
+        return ctxValue.stream().anyMatch(x -> getValue().stream().anyMatch(x::endsWith));
+    }
+
+    private boolean valueStartsWith(Set<String> ctxValue) {
+        // naive implementation (should build a tree)
+        return ctxValue.stream().anyMatch(x -> getValue().stream().anyMatch(x::startsWith));
+    }
+
+    public enum Operator {
+        /**
+         * EQ to empty or no value requires the term to exist as well as being empty
+         */
+        EQ,
+        STARTS_WITH,
+        ENDS_WITH
+    }
+
     @Value.Check
     protected void check() {
         if (getField().isEmpty()) {
             throw new RuntimeException("StringTerm requires a field to be specified.");
-        }
-    }
-
-    private Collection<String> getValue(DocumentContext context) {
-        Object ctxValue = context.getCtx().get(getField());
-        if (ctxValue instanceof Collection) {
-            //noinspection unchecked
-            return (Collection<String>)ctxValue;
-        } else if (ctxValue instanceof String) {
-            return Set.of((String) ctxValue);
-        } else {
-            return null;
         }
     }
 

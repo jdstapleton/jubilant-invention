@@ -5,10 +5,7 @@ import com.jamesstapleton.com.bems.Model;
 import com.jamesstapleton.com.bems.model.DocumentContext;
 import org.immutables.value.Value;
 
-import java.time.DateTimeException;
-import java.time.Instant;
 import java.time.OffsetDateTime;
-import java.time.ZoneOffset;
 
 /**
  * DateTimeTerm can match on a DocumentContext field in one of the following formats:
@@ -56,7 +53,8 @@ public abstract class DateTimeTerm implements Term {
 
     @Override
     public final boolean matches(DocumentContext context) {
-        var ctxValue = getValue(context);
+        var ctxValue = context.getAs(getField(), OffsetDateTime.class);
+
         if (ctxValue == null) {
             return false;
         }
@@ -69,26 +67,6 @@ public abstract class DateTimeTerm implements Term {
         }
 
         return false;
-    }
-
-    private OffsetDateTime getValue(DocumentContext context) {
-        Object ctxValue = context.getCtx().get(getField());
-        if (ctxValue instanceof String) {
-            try {
-                return OffsetDateTime.parse((CharSequence) ctxValue);
-            } catch (DateTimeException e) {
-                return null;
-            }
-        } else if (ctxValue instanceof OffsetDateTime) {
-            return (OffsetDateTime) ctxValue;
-        } else if (ctxValue instanceof Number) {
-            var num = (Number) ctxValue;
-
-            return OffsetDateTime.ofInstant(Instant.ofEpochMilli(num.longValue()), ZoneOffset.UTC);
-        }
-        else {
-            return null;
-        }
     }
 
     @Override

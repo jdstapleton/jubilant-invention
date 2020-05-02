@@ -1,4 +1,4 @@
-package com.jamesstapleton.com.bems.boolexp;
+package com.jamesstapleton.com.bems.utils;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.databind.DatabindContext;
@@ -7,7 +7,7 @@ import com.fasterxml.jackson.databind.jsontype.impl.TypeIdResolverBase;
 
 import java.io.IOException;
 
-public class TermIdResolver extends TypeIdResolverBase {
+public class ImmutablesIdResolver extends TypeIdResolverBase {
     private JavaType superType;
 
     @Override
@@ -35,12 +35,12 @@ public class TermIdResolver extends TypeIdResolverBase {
         try {
             return context.constructSpecializedType(
                     superType,
-                    Class.forName(TermIdResolver.class.getPackageName() + ".Immutable" + id));
+                    Class.forName(ImmutablesIdResolver.class.getPackageName() + ".Immutable" + id));
         } catch (ClassNotFoundException e) {
             try {
                 return context.constructSpecializedType(
                         superType,
-                        Class.forName(TermIdResolver.class.getPackageName() + ".Immutable" + id));
+                        Class.forName(ImmutablesIdResolver.class.getPackageName() + ".Immutable" + id));
             } catch (ClassNotFoundException e2) {
                 var excp = new IOException("No type mapping for " + id);
                 excp.addSuppressed(e);
