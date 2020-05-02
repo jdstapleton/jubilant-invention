@@ -6,8 +6,16 @@ import com.jamesstapleton.com.bems.model.DocumentContext;
 import org.immutables.value.Value;
 
 import java.time.DateTimeException;
+import java.time.Instant;
 import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
 
+/**
+ * DateTimeTerm can match on a DocumentContext field in one of the following formats:
+ *   OffsetDateTime,
+ *   ISO8601 DateTime String,
+ *   UnixEpochMillis long
+ */
 @Value.Immutable
 @Model
 public abstract class DateTimeTerm implements Term {
@@ -39,6 +47,13 @@ public abstract class DateTimeTerm implements Term {
 
     public abstract Operator getOp();
 
+    @Value.Check
+    protected void check() {
+        if (getField().isEmpty()) {
+            throw new RuntimeException("DateTimeTerm requires a field to be specified.");
+        }
+    }
+
     @Override
     public final boolean matches(DocumentContext context) {
         var ctxValue = getValue(context);
@@ -48,9 +63,9 @@ public abstract class DateTimeTerm implements Term {
 
         switch (getOp()) {
             case AFTER:
-                return this.getValue().isAfter(ctxValue);
+                return ctxValue.isAfter(this.getValue());
             case BEFORE:
-                return this.getValue().isBefore(ctxValue);
+                return ctxValue.isBefore(this.getValue());
         }
 
         return false;
@@ -64,7 +79,14 @@ public abstract class DateTimeTerm implements Term {
             } catch (DateTimeException e) {
                 return null;
             }
-        } else {
+        } else if (ctxValue instanceof OffsetDateTime) {
+            return (OffsetDateTime) ctxValue;
+        } else if (ctxValue instanceof Number) {
+            var num = (Number) ctxValue;
+
+            return OffsetDateTime.ofInstant(Instant.ofEpochMilli(num.longValue()), ZoneOffset.UTC);
+        }
+        else {
             return null;
         }
     }

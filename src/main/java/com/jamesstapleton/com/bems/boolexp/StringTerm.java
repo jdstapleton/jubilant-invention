@@ -13,6 +13,9 @@ import java.util.Set;
 @Model
 public abstract class StringTerm implements Term {
     public enum Operator {
+        /**
+         * EQ to empty or no value requires the term to exist as well as being empty
+         */
         EQ
     }
 
@@ -39,7 +42,19 @@ public abstract class StringTerm implements Term {
             return false;
         }
 
+        if (getValue().isEmpty()) {
+            return ctxValue.isEmpty()
+                    || (ctxValue.size() == 1 && ctxValue.stream().findFirst().orElse("").isEmpty());
+        }
+
         return ctxValue.stream().anyMatch(getValue()::contains);
+    }
+
+    @Value.Check
+    protected void check() {
+        if (getField().isEmpty()) {
+            throw new RuntimeException("StringTerm requires a field to be specified.");
+        }
     }
 
     private Collection<String> getValue(DocumentContext context) {

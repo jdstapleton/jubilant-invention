@@ -16,4 +16,8 @@ public interface DocumentContext {
 
     @Value.Parameter
     Map<String, Object> getCtx();
+
+    static ImmutableDocumentContext.Builder builder() {
+        return ImmutableDocumentContext.builder();
+    }
 }
