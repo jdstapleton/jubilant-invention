@@ -1,65 +1,31 @@
 package com.jamesstapleton.com.bems.model;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.jamesstapleton.com.bems.Model;
 import com.jamesstapleton.com.bems.boolexp.Rule;
+import org.immutables.value.Value;
 
-import java.util.Objects;
-import java.util.UUID;
-
-
-public class StoredQuery {
-    @JsonProperty
-    private final String id;
-    @JsonProperty
-    private final Rule rule;
-    @JsonProperty
-    private final Metadata metadata;
-
-    public StoredQuery(Rule rule, Metadata metadata) {
-        this(UUID.randomUUID().toString(), rule, metadata);
+@JsonDeserialize(builder = ImmutableStoredQuery.Builder.class)
+@Value.Immutable
+@Model
+public interface StoredQuery {
+    static ImmutableStoredQuery.Builder builder() {
+        return ImmutableStoredQuery.builder();
     }
 
-    @JsonCreator
-    public StoredQuery(String id, Rule rule, Metadata metadata) {
-        this.id = id;
-        this.rule = rule;
-        this.metadata = metadata;
+    @Value.Default
+    default String getId() {
+        return "";
     }
 
-    public String getId() {
-        return id;
+    @Value.Default
+    default String getName() {
+        return "";
     }
 
-    public Metadata getMetadata() {
-        return metadata;
-    }
+    Rule getRule();
 
-    public Rule getRule() {
-        return rule;
-    }
+    Metadata getMetadata();
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        StoredQuery that = (StoredQuery) o;
-        return Objects.equals(id, that.id) &&
-                Objects.equals(rule, that.rule) &&
-                Objects.equals(metadata, that.metadata);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, rule, metadata);
-    }
-
-    @Override
-    public String toString() {
-        return "StoredQuery{" +
-                "id='" + id + '\'' +
-                ", rule=" + rule +
-                ", metadata=" + metadata +
-                '}';
-    }
+    StoredQuery withId(String id);
 }

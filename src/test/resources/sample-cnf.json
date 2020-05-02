@@ -1,28 +1,39 @@
 {
-  "id" : "xyz",
-  "rule" : {
-    "mode" : "CNF",
-    "clauses" : [ [ {
-      "type" : ".StringTerm",
-      "field" : "b",
-      "value" : "pepper",
-      "op" : "EQ"
-    } ], [ {
-      "type" : ".StringTerm",
-      "field" : "b",
-      "value" : [ "cheese", "eggs" ],
-      "op" : "EQ"
-    }, {
-      "type" : ".StringTerm",
-      "field" : "a",
-      "value" : "hello",
-      "op" : "EQ"
-    }, {
-      "type" : ".DateTimeTerm",
-      "field" : "date",
-      "value" : "2020-04-01T16:08:00Z",
-      "op" : "AFTER"
-    } ] ]
+  "id": "id-xyz",
+  "name": "xyz",
+  "rule": {
+    "mode": "CNF",
+    "clauses": [
+      [
+        {
+          "type": "StringTerm",
+          "field": "b",
+          "value": "pepper",
+          "op": "EQ"
+        }
+      ],
+      [
+        {
+          "type": "StringTerm",
+          "field": "b",
+          "value": [
+            "cheese",
+            "eggs"
+          ],
+          "op": "EQ"
+        },
+        {
+          "type": "StringTerm",
+          "field": "a",
+          "value": "hello",
+          "op": "EQ"
+        },
+        {
+          "type": "DateTimeTerm",
+          "field": "date",
+          "value": "2020-04-01T16:08:00Z",
+          "op": "AFTER"
+        } ] ]
   },
   "metadata" : {
     "visibilities" : [ "C" ]

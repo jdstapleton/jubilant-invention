@@ -1,14 +1,18 @@
 package com.jamesstapleton.com.bems.boolexp;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.jamesstapleton.com.bems.Model;
 import com.jamesstapleton.com.bems.model.DocumentContext;
+import org.immutables.value.Value;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
-public class Rule {
+@JsonDeserialize(builder = ImmutableRule.Builder.class)
+@Value.Immutable
+@Model
+public abstract class Rule {
     public enum Mode {
         /**
          * Ands of Ors
@@ -19,25 +23,19 @@ public class Rule {
          */
         DNF
     }
-    @JsonProperty
-    private final Mode mode;
-    @JsonProperty
-    private final List<List<Term>> clauses;
 
-    public Rule(Mode mode, List<List<Term>> operands) {
-        this.mode = mode;
-        this.clauses = operands;
+    @SafeVarargs
+    public static Rule createCNF(List<Term>... terms) {
+        return ImmutableRule.of(Mode.CNF, Arrays.asList(terms));
     }
 
-    public boolean matches(DocumentContext context) {
-        if (mode == Mode.CNF) {
-            return clauses.stream()
-                    .allMatch(inner -> intersects(inner, context));
-        } else {
-            return clauses.stream()
-                    .anyMatch(inner -> allMatches(inner, context));
-        }
+    @SafeVarargs
+    public static Rule createDNF(List<Term>... terms) {
+        return ImmutableRule.of(Mode.DNF, Arrays.asList(terms));
     }
+
+    @Value.Parameter
+    public abstract Mode getMode();
 
     private static boolean intersects(List<Term> terms, DocumentContext context) {
         return terms.stream().anyMatch(i -> i.matches(context));
@@ -47,38 +45,27 @@ public class Rule {
         return terms.stream().allMatch(i -> i.matches(context));
     }
 
-    @SafeVarargs
-    public static Rule createCNF(List<Term>... terms) {
-        return new Rule(Mode.CNF, Arrays.asList(terms));
-    }
+    @Value.Parameter
+    public abstract List<List<Term>> getClauses();
 
-    @SafeVarargs
-    public static Rule createDNF(List<Term>... terms) {
-        return new Rule(Mode.DNF, Arrays.asList(terms));
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Rule rule = (Rule) o;
-        return mode == rule.mode &&
-                Objects.equals(clauses, rule.clauses);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(mode, clauses);
+    public final boolean matches(DocumentContext context) {
+        if (getMode() == Mode.CNF) {
+            return getClauses().stream()
+                    .allMatch(inner -> intersects(inner, context));
+        } else {
+            return getClauses().stream()
+                    .anyMatch(inner -> allMatches(inner, context));
+        }
     }
 
     @Override
     public String toString() {
-        if (mode == Mode.CNF) {
-            return clauses.stream()
+        if (getMode() == Mode.CNF) {
+            return getClauses().stream()
                     .map(c -> "(" + c.stream().map(Object::toString).collect(Collectors.joining(" OR ")) + ")")
                     .collect(Collectors.joining(" AND "));
         } else {
-            return clauses.stream()
+            return getClauses().stream()
                     .map(c -> "(" + c.stream().map(Object::toString).collect(Collectors.joining(" AND ")) + ")")
                     .collect(Collectors.joining(" OR "));
         }

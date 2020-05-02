@@ -1,15 +1,17 @@
 package com.jamesstapleton.com.bems.model;
 
+import com.jamesstapleton.com.bems.Model;
+import org.immutables.value.Value;
+
 import java.util.Set;
 
-public class UserContext {
-    private final Set<String> authorizations;
-
-    public UserContext(Set<String> authorizations) {
-        this.authorizations = authorizations;
+@Value.Immutable
+@Model
+public interface UserContext {
+    static UserContext of(Set<String> authorizations) {
+        return ImmutableUserContext.of(authorizations);
     }
 
-    public Set<String> getAuthorizations() {
-        return authorizations;
-    }
+    @Value.Parameter
+    Set<String> getAuthorizations();
 }

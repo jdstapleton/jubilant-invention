@@ -1,15 +1,19 @@
 package com.jamesstapleton.com.bems.model;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.jamesstapleton.com.bems.Model;
+import org.immutables.value.Value;
+
 import java.util.Map;
 
-public class DocumentContext {
-    private final Map<String, Object> ctx;
-
-    public DocumentContext(Map<String, Object> ctx) {
-        this.ctx = Map.copyOf(ctx);
+@JsonDeserialize(builder = ImmutableDocumentContext.Builder.class)
+@Value.Immutable
+@Model
+public interface DocumentContext {
+    static DocumentContext of(Map<String, Object> ctx) {
+        return ImmutableDocumentContext.of(ctx);
     }
 
-    public Map<String, Object> getCtx() {
-        return ctx;
-    }
+    @Value.Parameter
+    Map<String, Object> getCtx();
 }
