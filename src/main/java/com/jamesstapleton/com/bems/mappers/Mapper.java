@@ -1,15 +1,13 @@
-package com.jamesstapleton.com.bems.normalizer;
+package com.jamesstapleton.com.bems.mappers;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.databind.annotation.JsonTypeIdResolver;
-import com.jamesstapleton.com.bems.model.DocumentContext;
 import com.jamesstapleton.com.bems.utils.ImmutablesIdResolver;
 
-import javax.validation.constraints.Null;
+import java.util.stream.Stream;
 
 @JsonTypeIdResolver(ImmutablesIdResolver.class)
 @JsonTypeInfo(use = JsonTypeInfo.Id.CUSTOM, property = "type")
-public interface ValueNormalizer {
-    @Null
-    Object normalize(String field, Object fieldValue, DocumentContext fullDocument);
+public interface Mapper {
+    Stream<Object> map(Object input);
 }

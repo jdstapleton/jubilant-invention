@@ -6,6 +6,7 @@ import com.jamesstapleton.com.bems.Model;
 import com.jamesstapleton.com.bems.model.DocumentContext;
 import org.immutables.value.Value;
 
+import java.util.Collection;
 import java.util.Set;
 
 @Value.Immutable
@@ -13,7 +14,7 @@ import java.util.Set;
 public abstract class StringTerm implements Term {
     @Override
     public boolean matches(DocumentContext context) {
-        var ctxValue = context.getSetAs(getField(), String.class);
+        var ctxValue = context.<String>getCollectionAs(getField());
 
         if (ctxValue == null) {
             return false;
@@ -49,7 +50,7 @@ public abstract class StringTerm implements Term {
 
     public abstract StringTerm withField(String newFieldName);
 
-    private boolean valueEq(Set<String> ctxValue) {
+    private boolean valueEq(Collection<String> ctxValue) {
         if (getValue().isEmpty()) {
             return ctxValue.isEmpty()
                     || (ctxValue.size() == 1 && ctxValue.stream().findFirst().orElse("").isEmpty());
@@ -58,12 +59,12 @@ public abstract class StringTerm implements Term {
         return ctxValue.stream().anyMatch(getValue()::contains);
     }
 
-    private boolean valueEndsWith(Set<String> ctxValue) {
+    private boolean valueEndsWith(Collection<String> ctxValue) {
         // naive implementation (should build a tree)
         return ctxValue.stream().anyMatch(x -> getValue().stream().anyMatch(x::endsWith));
     }
 
-    private boolean valueStartsWith(Set<String> ctxValue) {
+    private boolean valueStartsWith(Collection<String> ctxValue) {
         // naive implementation (should build a tree)
         return ctxValue.stream().anyMatch(x -> getValue().stream().anyMatch(x::startsWith));
     }

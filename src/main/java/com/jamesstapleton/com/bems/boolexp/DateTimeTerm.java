@@ -53,7 +53,7 @@ public abstract class DateTimeTerm implements Term {
 
     @Override
     public final boolean matches(DocumentContext context) {
-        var ctxValue = context.getAs(getField(), OffsetDateTime.class);
+        var ctxValue = context.<OffsetDateTime>getAs(getField());
 
         if (ctxValue == null) {
             return false;
