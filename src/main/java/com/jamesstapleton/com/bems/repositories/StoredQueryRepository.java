@@ -44,8 +44,8 @@ public class StoredQueryRepository {
 
     public List<StoredQuery> findMatches(DocumentContext documentContext, UserContext userContext) {
         return queries.values().stream()
-                .filter(i -> i.getRule().matches(documentContext))
                 .filter(filterForUser(userContext))
+                .filter(i -> i.getRule().matches(documentContext))
                 .collect(Collectors.toList());
     }
 }
