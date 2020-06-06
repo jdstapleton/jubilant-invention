@@ -13,14 +13,14 @@ public interface Enumifier extends Mapper {
 
     @SuppressWarnings("unchecked")
     @Value.Derived
-    default <T extends Enum<?>> Class<T> getEnumType() {
+    default Class<Enum<?>> getEnumType() {
         try {
             // if no '.' we will assume its in our Model package.
             // the Enum type is checked in the Immutable's Check function since this is a generic
             if (getName().contains(".")) {
-                return (Class<T>) Class.forName(getName());
+                return (Class<Enum<?>>) Class.forName(getName());
             } else {
-                return (Class<T>) Class.forName(DocumentContext.class.getPackageName() + "." + getName());
+                return (Class<Enum<?>>) Class.forName(DocumentContext.class.getPackageName() + "." + getName());
             }
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
@@ -37,11 +37,12 @@ public interface Enumifier extends Mapper {
         return this;
     }
 
+    @SuppressWarnings({"rawtypes", "unchecked"})
     @Override
     default Stream<Object> map(Object input) {
         if (input instanceof String) {
             try {
-                return Stream.of(Enum.valueOf(getEnumType(), (String) input));
+                return Stream.of(Enum.valueOf((Class) getEnumType(), (String) input));
             } catch (IllegalArgumentException badArgumentEx) {
                 return Stream.of();
             }
