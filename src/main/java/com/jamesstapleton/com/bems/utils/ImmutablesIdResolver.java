@@ -9,38 +9,40 @@ import java.io.IOException;
 
 public class ImmutablesIdResolver extends TypeIdResolverBase {
     private JavaType superType;
+    private String packageName = this.getClass().getPackageName();
 
     @Override
-    public void init(JavaType baseType) {
+    public final void init(JavaType baseType) {
         superType = baseType;
+        packageName = superType.getRawClass().getPackageName();
     }
 
     @Override
-    public String idFromValue(Object value) {
+    public final String idFromValue(Object value) {
         return value.getClass().getSimpleName().replace("Immutable", "");
     }
 
     @Override
-    public String idFromValueAndType(Object value, Class<?> suggestedType) {
+    public final String idFromValueAndType(Object value, Class<?> suggestedType) {
         return suggestedType.getSimpleName().replace("Immutable", "");
     }
 
     @Override
-    public JsonTypeInfo.Id getMechanism() {
+    public final JsonTypeInfo.Id getMechanism() {
         return JsonTypeInfo.Id.MINIMAL_CLASS;
     }
 
     @Override
-    public JavaType typeFromId(DatabindContext context, String id) throws IOException {
+    public final JavaType typeFromId(DatabindContext context, String id) throws IOException {
         try {
             return context.constructSpecializedType(
                     superType,
-                    Class.forName(ImmutablesIdResolver.class.getPackageName() + ".Immutable" + id));
+                    Class.forName(packageName + ".Immutable" + id));
         } catch (ClassNotFoundException e) {
             try {
                 return context.constructSpecializedType(
                         superType,
-                        Class.forName(ImmutablesIdResolver.class.getPackageName() + ".Immutable" + id));
+                        Class.forName(packageName + ".Immutable" + id));
             } catch (ClassNotFoundException e2) {
                 var excp = new IOException("No type mapping for " + id);
                 excp.addSuppressed(e);
