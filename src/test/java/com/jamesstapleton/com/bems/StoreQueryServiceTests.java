@@ -10,41 +10,42 @@ import com.jamesstapleton.com.bems.service.StoredQueryService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class StoreQueryServiceTests {
-    final static StoredQueryService sqs = new StoredQueryService(new StoredQueryRepository());
     final static StoredQuery Q1 = StoredQuery.builder()
+            .id("Q1")
             .rule(Rule.createCNF(List.of(Term.of("a", "hello"))))
             .metadata(Metadata.of("A"))
             .build();
-
     final static StoredQuery Q2 = StoredQuery.builder()
+            .id("Q2")
             .rule(
                     Rule.createCNF(List.of(Term.of("a", "hello")), List.of(
                             Term.of("a", "world"),
                             Term.of("a", "universe"))))
             .metadata(Metadata.of("B"))
             .build();
-
     final static StoredQuery Q3 = StoredQuery.builder()
+            .id("Q3")
             .rule(Rule.createCNF(List.of(Term.of("b", "pepper")), List.of(
                     Term.of("b", "eggs"),
                     Term.of("a", "hello"))))
             .metadata(Metadata.of("C"))
             .build();
-
     final static StoredQuery Q4 = StoredQuery.builder()
+            .id("Q4")
             .rule(Rule.createDNF(List.of(Term.of("b", "pepper")), List.of(
                     Term.of("b", "eggs"),
-                    Term.of("a", "hello"))))
+                    Term.of("a", "ham"))))
             .metadata(Metadata.of("C"))
             .build();
+    final StoredQueryService sqs = new StoredQueryService(new StoredQueryRepository());
 
     @BeforeEach
     public void beforeEach() {
@@ -58,9 +59,19 @@ public class StoreQueryServiceTests {
     public void shouldFindMatchesSimple() {
         long startTime = System.currentTimeMillis();
         final var doc = DocumentContext.of(Map.of("a", Set.of("hello"), "b", "pepper"));
-        final var actual = sqs.findMatches(doc).stream().map(s -> s.withId("")).collect(Collectors.toSet());
+        final var actual = new HashSet<>(sqs.findMatches(doc));
 
         assertEquals(Set.of(Q1, Q3, Q4), actual);
+        System.out.println("Time spent " + (System.currentTimeMillis() - startTime) + "ms");
+    }
+
+    @Test
+    public void dnfShouldMatchOrsOfAnds() {
+        long startTime = System.currentTimeMillis();
+        final var doc = DocumentContext.of(Map.of("a", Set.of("ham"), "b", "eggs"));
+        final var actual = new HashSet<>(sqs.findMatches(doc));
+
+        assertEquals(Set.of(Q4), actual);
         System.out.println("Time spent " + (System.currentTimeMillis() - startTime) + "ms");
     }
 }

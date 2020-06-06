@@ -48,7 +48,7 @@ public class StoredQueryService {
     private void assertDoesNotExist(String id) {
         storedQueryRepository.findById(id).ifPresent((x) -> {
             throw new ResponseStatusException(
-                    HttpStatus.CONFLICT, "Store query by id " + id + " was not found.");
+                    HttpStatus.CONFLICT, "Store query by id " + id + " already exists.");
         });
     }
 
