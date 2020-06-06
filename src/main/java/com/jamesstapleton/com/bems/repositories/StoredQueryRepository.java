@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 
 @Repository
 public class StoredQueryRepository {
-    Map<String, StoredQuery> queries = new HashMap<>();
+    final Map<String, StoredQuery> queries = new HashMap<>();
 
     public static Predicate<StoredQuery> filterForUser(UserContext userContext) {
         return i -> i.getMetadata().getVisibilities().stream()

@@ -7,10 +7,8 @@ import com.jamesstapleton.com.bems.boolexp.Term;
 import com.jamesstapleton.com.bems.model.Metadata;
 import com.jamesstapleton.com.bems.model.StoredQuery;
 import org.junit.jupiter.api.Test;
-import org.springframework.util.StreamUtils;
 
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.util.List;
@@ -18,6 +16,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class StoredQuerySerializationTests {
+    private static final ObjectMapper mapper = new ObjectMapper().findAndRegisterModules();
     private static final String SAMPLE_CNF_JSON = readResource("/sample-cnf.json");
     private static final StoredQuery SAMPLE_QUERY = StoredQuery.builder()
             .id("id-xyz")
@@ -29,8 +28,6 @@ public class StoredQuerySerializationTests {
             )))
             .metadata(Metadata.of("C"))
             .build();
-
-    private static final ObjectMapper mapper = new ObjectMapper().findAndRegisterModules();
 
     @Test
     public void shouldSerializeToJson() throws JsonProcessingException {
@@ -48,7 +45,8 @@ public class StoredQuerySerializationTests {
 
     private static String readResource(String path) {
         try (var s = StoredQuerySerializationTests.class.getResourceAsStream(path)) {
-            return StreamUtils.copyToString(s, StandardCharsets.UTF_8);
+            // parse and reformat so the test passes even if formatting is different
+            return mapper.writerWithDefaultPrettyPrinter().writeValueAsString(mapper.readTree(s));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

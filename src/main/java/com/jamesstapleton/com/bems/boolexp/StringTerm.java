@@ -48,8 +48,6 @@ public abstract class StringTerm implements Term {
 
     public abstract Operator getOp();
 
-    public abstract StringTerm withField(String newFieldName);
-
     private boolean valueEq(Collection<String> ctxValue) {
         if (getValue().isEmpty()) {
             return ctxValue.isEmpty()

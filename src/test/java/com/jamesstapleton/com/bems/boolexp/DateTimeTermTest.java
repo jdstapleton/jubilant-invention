@@ -61,28 +61,4 @@ class DateTimeTermTest {
 
         assertFalse(actual.matches(DocumentContext.builder().putCtx("test", DATE_3).build()));
     }
-
-    @Test
-    public void shouldParseIso8601String() {
-        var actual = DateTimeTerm.after("test", DATE_2);
-
-        assertTrue(actual.matches(DocumentContext.builder().putCtx("test", "2020-04-03T20:45:59Z").build()));
-    }
-
-    @Test
-    public void shouldParseUnixTimeStampUTC() {
-        var actual = DateTimeTerm.after("test", DATE_2);
-        var earlyOffset = DATE_1.toInstant().toEpochMilli();
-        var afterOffset = DATE_3.toInstant().toEpochMilli();
-
-        assertFalse(actual.matches(DocumentContext.builder().putCtx("test", earlyOffset).build()));
-        assertTrue(actual.matches(DocumentContext.builder().putCtx("test", afterOffset).build()));
-    }
-
-    @Test
-    public void shouldReturnFalseForInvalidDateString() {
-        var actual = DateTimeTerm.after("test", DATE_2);
-
-        assertFalse(actual.matches(DocumentContext.builder().putCtx("test", "Not a valid date").build()));
-    }
 }

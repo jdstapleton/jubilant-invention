@@ -3,6 +3,7 @@ package com.jamesstapleton.com.bems.model;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.jamesstapleton.com.bems.Model;
 import org.immutables.value.Value;
+import org.springframework.lang.Nullable;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -24,9 +25,14 @@ public interface DocumentContext {
         return (T) getCtx().get(fieldName);
     }
 
+    @Nullable
     @SuppressWarnings("unchecked")
     default <T> Collection<T> getCollectionAs(String fieldName) {
         var val = getCtx().get(fieldName);
+        if (val == null) {
+            return null;
+        }
+
         return val instanceof Collection ? (Collection<T>) val : Collections.singleton((T) val);
     }
 

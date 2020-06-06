@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class StoreQueryServiceTests {
-    StoredQueryService sqs = new StoredQueryService(new StoredQueryRepository());
+    final static StoredQueryService sqs = new StoredQueryService(new StoredQueryRepository());
     final static StoredQuery Q1 = StoredQuery.builder()
             .rule(Rule.createCNF(List.of(Term.of("a", "hello"))))
             .metadata(Metadata.of("A"))
@@ -39,11 +39,19 @@ public class StoreQueryServiceTests {
             .metadata(Metadata.of("C"))
             .build();
 
+    final static StoredQuery Q4 = StoredQuery.builder()
+            .rule(Rule.createDNF(List.of(Term.of("b", "pepper")), List.of(
+                    Term.of("b", "eggs"),
+                    Term.of("a", "hello"))))
+            .metadata(Metadata.of("C"))
+            .build();
+
     @BeforeEach
     public void beforeEach() {
         sqs.save(Q1);
         sqs.save(Q2);
         sqs.save(Q3);
+        sqs.save(Q4);
     }
 
     @Test
@@ -52,7 +60,7 @@ public class StoreQueryServiceTests {
         final var doc = DocumentContext.of(Map.of("a", Set.of("hello"), "b", "pepper"));
         final var actual = sqs.findMatches(doc).stream().map(s -> s.withId("")).collect(Collectors.toSet());
 
-        assertEquals(Set.of(Q1, Q3), actual);
+        assertEquals(Set.of(Q1, Q3, Q4), actual);
         System.out.println("Time spent " + (System.currentTimeMillis() - startTime) + "ms");
     }
 }

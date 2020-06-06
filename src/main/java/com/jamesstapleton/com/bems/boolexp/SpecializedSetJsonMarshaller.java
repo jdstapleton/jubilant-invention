@@ -2,7 +2,6 @@ package com.jamesstapleton.com.bems.boolexp;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.*;
 
 import java.io.IOException;
@@ -24,7 +23,7 @@ public class SpecializedSetJsonMarshaller {
 
     public static class Deserializer extends  JsonDeserializer<Set<String>> {
         @Override
-        public Set<String> deserialize(JsonParser jp, DeserializationContext ctx) throws IOException, JsonProcessingException {
+        public Set<String> deserialize(JsonParser jp, DeserializationContext ctx) throws IOException {
             JsonNode node = jp.getCodec().readTree(jp);
             if (node.isTextual()) {
                 return Set.of(node.asText());

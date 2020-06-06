@@ -101,4 +101,8 @@ public abstract class DocumentSchema {
 
         return INVALID_VALUE;
     }
+
+    public static ImmutableDocumentSchema.Builder builder() {
+        return ImmutableDocumentSchema.builder();
+    }
 }
