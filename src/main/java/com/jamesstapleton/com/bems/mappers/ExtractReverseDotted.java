@@ -19,9 +19,9 @@ public interface ExtractReverseDotted extends Mapper {
     default Stream<Object> map(Object input) {
         if (input instanceof String) {
             var domainParts = ((String) input).split("\\.");
-            List<Object> list = new ArrayList<>(List.of(domainParts));
+            List<String> list = new ArrayList<>(List.of(domainParts));
             Collections.reverse(list);
-            return list.stream();
+            return Stream.of(String.join(".", list));
         }
 
         return Stream.of(input);
