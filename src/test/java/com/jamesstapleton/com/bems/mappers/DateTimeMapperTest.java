@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import java.time.OffsetDateTime;
 import java.time.format.DateTimeParseException;
 
+import static com.jamesstapleton.com.bems.utils.StreamUtils.first;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -22,7 +23,7 @@ public class DateTimeMapperTest {
 
     @Test
     public void shouldConvertFromISO8601Time() {
-        assertEquals(defaultUnderTest.map("2020-04-01T03:05:00Z").findFirst().orElseThrow(IllegalStateException::new), DATE_1);
+        assertEquals(DATE_1, first(defaultUnderTest.map("2020-04-01T03:05:00Z")));
     }
 
     @Test
@@ -31,7 +32,8 @@ public class DateTimeMapperTest {
                 .formatPattern("yyyy-MM-dd")
                 .parsedDateType(DateTimeMapper.ParsedDateType.DateOnlyStartOfDayUTC)
                 .build();
-        assertEquals(underTest.map("2020-04-01").findFirst().orElseThrow(IllegalStateException::new), startOfDay(DATE_1));
+
+        assertEquals(startOfDay(DATE_1), first(underTest.map("2020-04-01")));
     }
 
     @Test
@@ -40,13 +42,14 @@ public class DateTimeMapperTest {
                 .formatPattern("yyyy-MM-dd HH:mm")
                 .parsedDateType(DateTimeMapper.ParsedDateType.DateTimeImplicitUTC)
                 .build();
-        assertEquals(underTest.map("2020-04-01 03:05").findFirst().orElseThrow(IllegalStateException::new), DATE_1);
+
+        assertEquals(DATE_1, first(underTest.map("2020-04-01 03:05")));
     }
 
     @Test
     public void shouldConvertFromEpocMilli() {
         var epochMilli = DATE_1.toInstant().toEpochMilli();
-        assertEquals(defaultUnderTest.map(epochMilli).findFirst().orElseThrow(IllegalStateException::new), DATE_1);
+        assertEquals(DATE_1, first(defaultUnderTest.map(epochMilli)));
     }
 
     @Test

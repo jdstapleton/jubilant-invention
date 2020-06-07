@@ -6,6 +6,7 @@ import com.jamesstapleton.com.bems.model.sub.Drink;
 import org.junit.jupiter.api.Test;
 import org.springframework.data.repository.config.BootstrapMode;
 
+import static com.jamesstapleton.com.bems.utils.StreamUtils.first;
 import static org.junit.jupiter.api.Assertions.*;
 
 class EnumifierTest {
@@ -15,8 +16,8 @@ class EnumifierTest {
 
     @Test
     public void shouldParseAnExistingEnum() {
-        assertEquals(Food.EGGS, defaultUnderTest.map("EGGS").findFirst().orElse(null));
-        assertEquals(Food.CHEESE, defaultUnderTest.map("CHEESE").findFirst().orElse(null));
+        assertEquals(Food.EGGS, first(defaultUnderTest.map("EGGS")));
+        assertEquals(Food.CHEESE, first(defaultUnderTest.map("CHEESE")));
     }
 
     @Test
@@ -29,7 +30,8 @@ class EnumifierTest {
         var fqEnum = Enumifier.builder()
                 .name(".sub.Drink")
                 .build();
-        assertEquals(Drink.COFFEE, fqEnum.map("COFFEE").findFirst().orElse(null));
+
+        assertEquals(Drink.COFFEE, first(fqEnum.map("COFFEE")));
     }
 
     @Test
@@ -37,7 +39,8 @@ class EnumifierTest {
         var fqEnum = Enumifier.builder()
                 .name(BootstrapMode.class.getCanonicalName())
                 .build();
-        assertEquals(BootstrapMode.LAZY, fqEnum.map("LAZY").findFirst().orElse(null));
+
+        assertEquals(BootstrapMode.LAZY, first(fqEnum.map("LAZY")));
     }
 
     @Test
