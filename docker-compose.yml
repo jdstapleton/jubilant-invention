@@ -1,0 +1,21 @@
+version: '3.7'
+
+services:
+  mongo:
+    image: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: password
+    volumes:
+      - mongo_db:/data/db
+  rest:
+    build:
+      dockerfile: ../../Dockerfile
+      context: target/docker
+    ports:
+      - '8080:8080'
+    links:
+      - mongo
+volumes:
+  mongo_db:

@@ -2,8 +2,9 @@ package com.jamesstapleton.com.bems;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.hateoas.HypermediaAutoConfiguration;
 
-@SpringBootApplication
+@SpringBootApplication(exclude = HypermediaAutoConfiguration.class)
 public class BoolExpressionMatcherServiceApplication {
 
     public static void main(String[] args) {

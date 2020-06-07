@@ -7,6 +7,7 @@ import com.jamesstapleton.com.bems.service.StoredQueryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,7 +25,7 @@ public class MatchController {
         this.storedQueryService = storedQueryService;
     }
 
-    @PostMapping("/")
+    @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public Page<StoredQuery> findMatches(@RequestBody DocumentContext context) {
         var normalized = documentSchema.normalizeToSchema(context);
 

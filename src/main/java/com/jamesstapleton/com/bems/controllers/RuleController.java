@@ -6,6 +6,7 @@ import com.jamesstapleton.com.bems.service.StoredQueryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -18,17 +19,17 @@ public class RuleController {
         this.sqs = sqs;
     }
 
-    @GetMapping("/")
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public Page<RuleSummary> listStoredQueries(Pageable pageable) {
         return sqs.findAll(pageable).map(i -> new RuleSummary(i.getId(), i.getName()));
     }
 
-    @GetMapping("/{id}")
+    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public StoredQuery getStoredQuery(@PathVariable("id") String id) {
         return sqs.findById(id);
     }
 
-    @PostMapping("/")
+    @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public StoredQuery createNewQuery(@RequestBody StoredQuery storedQuery) {
         return sqs.save(storedQuery);
     }
