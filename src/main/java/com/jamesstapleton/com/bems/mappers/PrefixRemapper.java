@@ -11,6 +11,10 @@ import java.util.stream.Stream;
 @Value.Immutable
 @Model
 public interface PrefixRemapper extends Mapper {
+    static ImmutablePrefixRemapper.Builder builder() {
+        return ImmutablePrefixRemapper.builder();
+    }
+
     @Value.Default
     default List<Map<String, String>> getMappers() {
         return List.of();

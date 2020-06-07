@@ -11,6 +11,10 @@ import java.util.stream.Stream;
 @Value.Immutable
 @Model
 public interface ExtractReverseDotted extends Mapper {
+    static ImmutableExtractReverseDotted.Builder builder() {
+        return ImmutableExtractReverseDotted.builder();
+    }
+
     @Override
     default Stream<Object> map(Object input) {
         if (input instanceof String) {

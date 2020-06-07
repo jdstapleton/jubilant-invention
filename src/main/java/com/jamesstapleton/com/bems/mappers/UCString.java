@@ -8,6 +8,10 @@ import java.util.stream.Stream;
 @Value.Immutable
 @Model
 public interface UCString extends Mapper {
+    static ImmutableUCString.Builder builder() {
+        return ImmutableUCString.builder();
+    }
+
     @Override
     default Stream<Object> map(Object input) {
         if (input instanceof String) {

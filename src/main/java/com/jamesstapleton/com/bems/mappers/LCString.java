@@ -8,6 +8,10 @@ import java.util.stream.Stream;
 @Value.Immutable
 @Model
 public interface LCString extends Mapper {
+    static ImmutableLCString.Builder builder() {
+        return ImmutableLCString.builder();
+    }
+
     @Override
     default Stream<Object> map(Object input) {
         if (input instanceof String) {

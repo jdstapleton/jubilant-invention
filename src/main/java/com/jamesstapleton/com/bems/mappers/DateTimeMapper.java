@@ -1,13 +1,13 @@
 package com.jamesstapleton.com.bems.mappers;
 
 import com.jamesstapleton.com.bems.Model;
+import com.jamesstapleton.com.bems.exceptions.DocumentContextParseException;
 import org.immutables.value.Value;
 import org.springframework.lang.NonNull;
 
 import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import java.util.Objects;
 import java.util.stream.Stream;
 
 @Value.Immutable
@@ -51,7 +51,7 @@ public interface DateTimeMapper extends Mapper {
             }
         }
 
-        throw new IllegalStateException("Invalid format specification: " + getFormatPattern() + " @ " + getParsedDateType());
+        throw new DocumentContextParseException("Invalid format specification: " + getFormatPattern() + " @ " + getParsedDateType());
     }
 
     @Override
@@ -62,7 +62,7 @@ public interface DateTimeMapper extends Mapper {
             return Stream.of(OffsetDateTime.ofInstant(Instant.ofEpochMilli((Long) input), ZoneOffset.UTC));
         }
 
-        throw new DateTimeParseException("Unable to convert into a DateTime object.", Objects.toString(input), 0);
+        throw new DocumentContextParseException("Unable to parse text as date string");
     }
 
     enum ParsedDateType {
@@ -83,6 +83,14 @@ public interface DateTimeMapper extends Mapper {
     }
 
     interface OffsetDatetimeParser {
-        OffsetDateTime parse(CharSequence text);
+        OffsetDateTime doParse(CharSequence text) throws DateTimeParseException;
+
+        default OffsetDateTime parse(CharSequence text) throws DocumentContextParseException {
+            try {
+                return doParse(text);
+            } catch (RuntimeException e) {
+                throw new DocumentContextParseException("Unable to parse text as date string: " + e.getMessage(), e);
+            }
+        }
     }
 }

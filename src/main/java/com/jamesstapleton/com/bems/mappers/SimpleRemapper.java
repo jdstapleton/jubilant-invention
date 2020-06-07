@@ -12,6 +12,10 @@ import java.util.stream.Stream;
 @Value.Immutable
 @Model
 public interface SimpleRemapper extends Mapper {
+    static ImmutableSimpleRemapper.Builder builder() {
+        return ImmutableSimpleRemapper.builder();
+    }
+
     @Value.Default
     default List<Map<String, String>> getMappers() {
         return List.of();

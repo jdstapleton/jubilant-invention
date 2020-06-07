@@ -1,6 +1,7 @@
 package com.jamesstapleton.com.bems.mappers;
 
 import com.jamesstapleton.com.bems.Model;
+import com.jamesstapleton.com.bems.exceptions.DocumentContextParseException;
 import com.jamesstapleton.com.bems.model.DocumentContext;
 import org.immutables.value.Value;
 
@@ -9,6 +10,10 @@ import java.util.stream.Stream;
 @Value.Immutable
 @Model
 public interface Enumifier extends Mapper {
+    static ImmutableEnumifier.Builder builder() {
+        return ImmutableEnumifier.builder();
+    }
+
     String getName();
 
     @SuppressWarnings("unchecked")
@@ -16,21 +21,22 @@ public interface Enumifier extends Mapper {
     default Class<Enum<?>> getEnumType() {
         try {
             // if no '.' we will assume its in our Model package.
+            // if starting with a dot, assume its a subpackage of the Model package
             // the Enum type is checked in the Immutable's Check function since this is a generic
-            if (getName().contains(".")) {
-                return (Class<Enum<?>>) Class.forName(getName());
-            } else {
+            if (getName().startsWith(".") || !getName().contains(".")) {
                 return (Class<Enum<?>>) Class.forName(DocumentContext.class.getPackageName() + "." + getName());
+            } else {
+                return (Class<Enum<?>>) Class.forName(getName());
             }
         } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
+            throw new DocumentContextParseException("Unable to find enum of name " + getName(), e);
         }
     }
 
     @Value.Check
     default Enumifier check() {
         if (!getEnumType().isEnum()) {
-            throw new RuntimeException(
+            throw new DocumentContextParseException(
                     "Name must be in reference to an enum type by instead found: " + getEnumType().getCanonicalName());
         }
 
