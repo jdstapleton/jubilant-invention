@@ -4,6 +4,7 @@ import com.jamesstapleton.com.bems.Model;
 import com.jamesstapleton.com.bems.exceptions.DocumentContextParseException;
 import com.jamesstapleton.com.bems.model.DocumentContext;
 import org.immutables.value.Value;
+import org.springframework.util.StringUtils;
 
 import java.util.stream.Stream;
 
@@ -24,7 +25,8 @@ public interface Enumifier extends Mapper {
             // if starting with a dot, assume its a subpackage of the Model package
             // the Enum type is checked in the Immutable's Check function since this is a generic
             if (getName().startsWith(".") || !getName().contains(".")) {
-                return (Class<Enum<?>>) Class.forName(DocumentContext.class.getPackageName() + "." + getName());
+                var name = StringUtils.trimLeadingCharacter(getName(), '.');
+                return (Class<Enum<?>>) Class.forName(DocumentContext.class.getPackageName() + "." + name);
             } else {
                 return (Class<Enum<?>>) Class.forName(getName());
             }
