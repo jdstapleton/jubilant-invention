@@ -1,9 +1,9 @@
 package com.jamesstapleton.com.bems.mappers;
 
+import com.jamesstapleton.com.bems.exceptions.DocumentContextParseException;
 import org.junit.jupiter.api.Test;
 
 import java.time.OffsetDateTime;
-import java.time.format.DateTimeParseException;
 
 import static com.jamesstapleton.com.bems.utils.StreamUtils.first;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -54,8 +54,8 @@ public class DateTimeMapperTest {
 
     @Test
     public void shouldThrowExceptionOnBadDateFormat() {
-        assertThrows(DateTimeParseException.class, () -> defaultUnderTest.map("Not a real date"));
-        assertThrows(DateTimeParseException.class, () -> defaultUnderTest.map("2020-13-01T00:00:00Z"));
+        assertThrows(DocumentContextParseException.class, () -> defaultUnderTest.map("Not a real date"));
+        assertThrows(DocumentContextParseException.class, () -> defaultUnderTest.map("2020-13-01T00:00:00Z"));
     }
 
 }
