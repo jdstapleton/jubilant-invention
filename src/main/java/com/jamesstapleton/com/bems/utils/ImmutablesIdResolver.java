@@ -29,7 +29,7 @@ public class ImmutablesIdResolver extends TypeIdResolverBase {
 
     @Override
     public final JsonTypeInfo.Id getMechanism() {
-        return JsonTypeInfo.Id.MINIMAL_CLASS;
+        return JsonTypeInfo.Id.NAME;
     }
 
     @Override

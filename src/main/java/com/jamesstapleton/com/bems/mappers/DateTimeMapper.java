@@ -1,5 +1,6 @@
 package com.jamesstapleton.com.bems.mappers;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.jamesstapleton.com.bems.Model;
 import com.jamesstapleton.com.bems.exceptions.DocumentContextParseException;
 import org.immutables.value.Value;
@@ -36,6 +37,7 @@ public interface DateTimeMapper extends Mapper {
         return ParsedDateType.OffsetDateTime;
     }
 
+    @JsonIgnore
     @Value.Derived
     default OffsetDatetimeParser getFormatter() {
         if (getFormatPattern().equals("")) {

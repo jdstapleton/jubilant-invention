@@ -41,24 +41,24 @@ class DateTimeTermTest {
     public void shouldMatchAfter() {
         var actual = DateTimeTerm.after("test", DATE_2);
 
-        assertFalse(actual.matches(DocumentContext.builder().putCtx("test", DATE_1).build()));
-        assertFalse(actual.matches(DocumentContext.builder().putCtx("test", DATE_2).build()));
-        assertTrue(actual.matches(DocumentContext.builder().putCtx("test", DATE_3).build()));
+        assertFalse(actual.matches(DocumentContext.builder().putContext("test", DATE_1).build()));
+        assertFalse(actual.matches(DocumentContext.builder().putContext("test", DATE_2).build()));
+        assertTrue(actual.matches(DocumentContext.builder().putContext("test", DATE_3).build()));
     }
 
     @Test
     public void shouldMatchBefore() {
         var actual = DateTimeTerm.before("test", DATE_2);
 
-        assertTrue(actual.matches(DocumentContext.builder().putCtx("test", DATE_1).build()));
-        assertFalse(actual.matches(DocumentContext.builder().putCtx("test", DATE_2).build()));
-        assertFalse(actual.matches(DocumentContext.builder().putCtx("test", DATE_3).build()));
+        assertTrue(actual.matches(DocumentContext.builder().putContext("test", DATE_1).build()));
+        assertFalse(actual.matches(DocumentContext.builder().putContext("test", DATE_2).build()));
+        assertFalse(actual.matches(DocumentContext.builder().putContext("test", DATE_3).build()));
     }
 
     @Test
     public void shouldNotMatchAnotherTerm() {
         var actual = DateTimeTerm.after("test2", DATE_2);
 
-        assertFalse(actual.matches(DocumentContext.builder().putCtx("test", DATE_3).build()));
+        assertFalse(actual.matches(DocumentContext.builder().putContext("test", DATE_3).build()));
     }
 }

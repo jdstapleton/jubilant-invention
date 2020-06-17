@@ -30,32 +30,32 @@ public class StringTermTest {
     @Test
     public void shouldMatchSingleValue() {
         var actual = StringTerm.eq("test", "value-1");
-        assertTrue(actual.matches(DocumentContext.builder().putCtx("test", "value-1").build()));
-        assertFalse(actual.matches(DocumentContext.builder().putCtx("test", "value-2").build()));
+        assertTrue(actual.matches(DocumentContext.builder().putContext("test", "value-1").build()));
+        assertFalse(actual.matches(DocumentContext.builder().putContext("test", "value-2").build()));
     }
 
     @Test
     public void shouldMatchAnyValueInTermValue() {
         var actual = StringTerm.eq("test", "value-1", "value-2");
-        assertTrue(actual.matches(DocumentContext.builder().putCtx("test", "value-1").build()));
-        assertTrue(actual.matches(DocumentContext.builder().putCtx("test", "value-2").build()));
-        assertFalse(actual.matches(DocumentContext.builder().putCtx("test", "value-3").build()));
+        assertTrue(actual.matches(DocumentContext.builder().putContext("test", "value-1").build()));
+        assertTrue(actual.matches(DocumentContext.builder().putContext("test", "value-2").build()));
+        assertFalse(actual.matches(DocumentContext.builder().putContext("test", "value-3").build()));
     }
 
     @Test
     public void shouldMatchEmptyTerm() {
         // note this require the term to exist in the DocumentContext
         var actual = StringTerm.eq("test");
-        assertTrue(actual.matches(DocumentContext.builder().putCtx("test", "").build()));
-        assertFalse(actual.matches(DocumentContext.builder().putCtx("test", "value").build()));
-        assertFalse(actual.matches(DocumentContext.builder().putCtx("test-2", "").build()));
+        assertTrue(actual.matches(DocumentContext.builder().putContext("test", "").build()));
+        assertFalse(actual.matches(DocumentContext.builder().putContext("test", "value").build()));
+        assertFalse(actual.matches(DocumentContext.builder().putContext("test-2", "").build()));
     }
 
     @Test
     public void shouldNotMatchAnotherTerm() {
         var actual = StringTerm.eq("test", "value-1", "value-2");
         assertFalse(actual.matches(DocumentContext.builder()
-                .putCtx("test2", "value-1")
-                .putCtx("test", "not-correct").build()));
+                .putContext("test2", "value-1")
+                .putContext("test", "not-correct").build()));
     }
 }

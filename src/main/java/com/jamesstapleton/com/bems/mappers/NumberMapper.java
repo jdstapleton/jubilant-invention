@@ -1,5 +1,6 @@
 package com.jamesstapleton.com.bems.mappers;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.jamesstapleton.com.bems.Model;
 import com.jamesstapleton.com.bems.exceptions.DocumentContextParseException;
 import org.immutables.value.Value;
@@ -20,6 +21,7 @@ public interface NumberMapper extends Mapper {
         return NumberType.LONG;
     }
 
+    @JsonIgnore
     @NonNull
     @Value.Derived
     default NumberStringParser getNumberParser() {
@@ -33,6 +35,7 @@ public interface NumberMapper extends Mapper {
         throw new IllegalStateException("Unable to determine number parser");
     }
 
+    @JsonIgnore
     @NonNull
     @Value.Derived
     default NumberValueConverter getNumberValueConverter() {

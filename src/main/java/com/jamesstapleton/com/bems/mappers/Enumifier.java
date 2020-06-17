@@ -1,5 +1,6 @@
 package com.jamesstapleton.com.bems.mappers;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.jamesstapleton.com.bems.Model;
 import com.jamesstapleton.com.bems.exceptions.DocumentContextParseException;
 import com.jamesstapleton.com.bems.model.DocumentContext;
@@ -17,6 +18,7 @@ public interface Enumifier extends Mapper {
 
     String getName();
 
+    @JsonIgnore
     @SuppressWarnings("unchecked")
     @Value.Derived
     default Class<Enum<?>> getEnumType() {

@@ -18,17 +18,17 @@ public interface DocumentContext {
     }
 
     @Value.Parameter
-    Map<String, Object> getCtx();
+    Map<String, Object> getContext();
 
     @SuppressWarnings("unchecked")
     default <T> T getAs(String fieldName) {
-        return (T) getCtx().get(fieldName);
+        return (T) getContext().get(fieldName);
     }
 
     @Nullable
     @SuppressWarnings("unchecked")
     default <T> Collection<T> getCollectionAs(String fieldName) {
-        var val = getCtx().get(fieldName);
+        var val = getContext().get(fieldName);
         if (val == null) {
             return null;
         }

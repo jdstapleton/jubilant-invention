@@ -1,6 +1,7 @@
 package com.jamesstapleton.com.bems.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.jamesstapleton.com.bems.Model;
 import org.immutables.value.Value;
 import org.springframework.lang.NonNull;
@@ -14,6 +15,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+@JsonDeserialize(builder = ImmutableDocumentSchema.Builder.class)
 @Value.Immutable
 @Model
 public abstract class DocumentSchema {
@@ -48,7 +50,7 @@ public abstract class DocumentSchema {
      * @return a converted DocumentContext
      */
     public DocumentContext normalizeToSchema(DocumentContext documentContext) {
-        return DocumentContext.of(documentContext.getCtx().entrySet().stream().collect(
+        return DocumentContext.of(documentContext.getContext().entrySet().stream().collect(
                 Collectors.toMap(
                         Map.Entry::getKey,
                         this::normalizeValue)));

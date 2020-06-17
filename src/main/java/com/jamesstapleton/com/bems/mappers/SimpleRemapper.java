@@ -1,5 +1,6 @@
 package com.jamesstapleton.com.bems.mappers;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.jamesstapleton.com.bems.Model;
 import org.immutables.value.Value;
 import org.springframework.util.PatternMatchUtils;
@@ -21,6 +22,7 @@ public interface SimpleRemapper extends Mapper {
         return List.of();
     }
 
+    @JsonIgnore
     @Value.Derived
     default List<Map.Entry<String, String>> getPatterns() {
         return getMappers().stream()

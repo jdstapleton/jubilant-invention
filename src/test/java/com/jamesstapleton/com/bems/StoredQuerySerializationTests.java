@@ -1,22 +1,21 @@
 package com.jamesstapleton.com.bems;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jamesstapleton.com.bems.boolexp.Rule;
 import com.jamesstapleton.com.bems.boolexp.Term;
 import com.jamesstapleton.com.bems.model.Metadata;
 import com.jamesstapleton.com.bems.model.StoredQuery;
 import org.junit.jupiter.api.Test;
 
-import java.io.IOException;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.util.List;
 
+import static com.jamesstapleton.com.bems.utils.TestUtils.MAPPER;
+import static com.jamesstapleton.com.bems.utils.TestUtils.readResource;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class StoredQuerySerializationTests {
-    private static final ObjectMapper mapper = new ObjectMapper().findAndRegisterModules();
     private static final String SAMPLE_CNF_JSON = readResource("/sample-cnf.json");
     private static final StoredQuery SAMPLE_QUERY = StoredQuery.builder()
             .id("id-xyz")
@@ -31,24 +30,14 @@ public class StoredQuerySerializationTests {
 
     @Test
     public void shouldSerializeToJson() throws JsonProcessingException {
-        final var actual = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(SAMPLE_QUERY);
+        final var actual = MAPPER.writerWithDefaultPrettyPrinter().writeValueAsString(SAMPLE_QUERY);
 
         assertEquals(SAMPLE_CNF_JSON, actual);
     }
 
     @Test
     public void shouldDeserializeFromJson() throws JsonProcessingException {
-        final var actual = mapper.readValue(SAMPLE_CNF_JSON, StoredQuery.class);
+        final var actual = MAPPER.readValue(SAMPLE_CNF_JSON, StoredQuery.class);
         assertEquals(SAMPLE_QUERY, actual);
-    }
-
-
-    private static String readResource(String path) {
-        try (var s = StoredQuerySerializationTests.class.getResourceAsStream(path)) {
-            // parse and reformat so the test passes even if formatting is different
-            return mapper.writerWithDefaultPrettyPrinter().writeValueAsString(mapper.readTree(s));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
     }
 }
