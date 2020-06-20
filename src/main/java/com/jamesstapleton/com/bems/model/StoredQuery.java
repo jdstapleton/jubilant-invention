@@ -33,7 +33,16 @@ public interface StoredQuery {
     @NonNull
     Metadata getMetadata();
 
-    StoredQuery withId(String id);
+    @NonNull
+    QuerySubject getSubject();
+
+    StoredQuery withId(@NonNull String id);
+
+    StoredQuery withSubject(@NonNull QuerySubject querySubject);
+
+    default StoredQuery withSubjectId(@NonNull String id) {
+        return withSubject(getSubject().withId(id));
+    }
 
     @Value.Check
     default void check() {

@@ -41,5 +41,11 @@
     "visibilities": [
       "C"
     ]
+  },
+  "subject": {
+    "id": "",
+    "title": "Some Title",
+    "description": "Some description",
+    "targetUri": "https://www.google.com"
   }
 }

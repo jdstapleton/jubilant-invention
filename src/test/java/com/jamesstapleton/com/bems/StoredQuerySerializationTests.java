@@ -4,9 +4,11 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.jamesstapleton.com.bems.boolexp.Rule;
 import com.jamesstapleton.com.bems.boolexp.Term;
 import com.jamesstapleton.com.bems.model.Metadata;
+import com.jamesstapleton.com.bems.model.QuerySubject;
 import com.jamesstapleton.com.bems.model.StoredQuery;
 import org.junit.jupiter.api.Test;
 
+import java.net.URI;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.util.List;
@@ -26,6 +28,11 @@ public class StoredQuerySerializationTests {
                     Term.after("date", OffsetDateTime.of(2020, 4, 1, 16, 8, 0, 0, ZoneOffset.UTC))
             )))
             .metadata(Metadata.of("C"))
+            .subject(QuerySubject.builder()
+                    .title("Some Title")
+                    .description("Some description")
+                    .targetUri(URI.create("https://www.google.com"))
+                    .build())
             .build();
 
     @Test

@@ -42,7 +42,10 @@ public class StoredQueryRepository {
     }
 
     public StoredQuery save(StoredQuery query) {
-        var toStore = query.getId().isEmpty() ? query.withId(UUID.randomUUID().toString()) : query;
+        var toStoreA = query.getId().isEmpty() ? query.withId(UUID.randomUUID().toString()) : query;
+        var toStore = toStoreA.getSubject().getId().isEmpty() ?
+                toStoreA.withSubjectId(toStoreA.getId()) : toStoreA;
+
         queries.put(toStore.getId(), toStore);
 
         return toStore;

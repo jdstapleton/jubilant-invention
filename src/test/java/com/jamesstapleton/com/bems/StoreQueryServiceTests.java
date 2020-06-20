@@ -4,12 +4,14 @@ import com.jamesstapleton.com.bems.boolexp.Rule;
 import com.jamesstapleton.com.bems.boolexp.Term;
 import com.jamesstapleton.com.bems.model.DocumentContext;
 import com.jamesstapleton.com.bems.model.Metadata;
+import com.jamesstapleton.com.bems.model.QuerySubject;
 import com.jamesstapleton.com.bems.model.StoredQuery;
 import com.jamesstapleton.com.bems.repositories.StoredQueryRepository;
 import com.jamesstapleton.com.bems.service.StoredQueryService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.net.URI;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -18,10 +20,17 @@ import java.util.Set;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class StoreQueryServiceTests {
+    final static QuerySubject SUBJECT = QuerySubject.builder()
+            .title("Some subject")
+            .description("A description")
+            .targetUri(URI.create("https://www.google.com"))
+            .build();
+
     final static StoredQuery Q1 = StoredQuery.builder()
             .id("Q1")
             .rule(Rule.createCNF(List.of(Term.of("a", "hello"))))
             .metadata(Metadata.of("A"))
+            .subject(SUBJECT.withId("Q1"))
             .build();
     final static StoredQuery Q2 = StoredQuery.builder()
             .id("Q2")
@@ -30,6 +39,7 @@ public class StoreQueryServiceTests {
                             Term.of("a", "world"),
                             Term.of("a", "universe"))))
             .metadata(Metadata.of("B"))
+            .subject(SUBJECT.withId("Q2"))
             .build();
     final static StoredQuery Q3 = StoredQuery.builder()
             .id("Q3")
@@ -37,6 +47,7 @@ public class StoreQueryServiceTests {
                     Term.of("b", "eggs"),
                     Term.of("a", "hello"))))
             .metadata(Metadata.of("C"))
+            .subject(SUBJECT.withId("Q3"))
             .build();
     final static StoredQuery Q4 = StoredQuery.builder()
             .id("Q4")
@@ -44,6 +55,7 @@ public class StoreQueryServiceTests {
                     Term.of("b", "eggs"),
                     Term.of("a", "ham"))))
             .metadata(Metadata.of("C"))
+            .subject(SUBJECT.withId("Q4"))
             .build();
     final StoredQueryService sqs = new StoredQueryService(new StoredQueryRepository());
 

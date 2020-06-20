@@ -24,6 +24,7 @@ public interface QuerySubject {
      *
      * @return generated id that should never change, used for logging
      */
+    @Value.Default
     default String getId() {
         return "";
     }
@@ -46,6 +47,8 @@ public interface QuerySubject {
     @NonNull
     URI getTargetUri();
 
+    QuerySubject withId(@NonNull String id);
+
     @Value.Check
     default void check() {
         try (ModelValidator validator = new ModelValidator("QuerySubject")) {
@@ -55,7 +58,7 @@ public interface QuerySubject {
                     .isNotNull()
                     .isHttpOrHttps()
                     .hostIsSpecified()
-                    .hasNoAuthority());
+                    .hasNoUserInfo());
         }
     }
 }

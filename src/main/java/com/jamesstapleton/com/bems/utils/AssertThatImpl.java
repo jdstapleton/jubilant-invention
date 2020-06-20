@@ -27,6 +27,10 @@ class AssertThatImpl {
             return getAssertionSubject().subject;
         }
 
+        default boolean isInvalid() {
+            return !getMessages().isEmpty();
+        }
+
         default List<String> getMessages() {
             return getAssertionSubject().messages;
         }
@@ -108,17 +112,21 @@ class AssertThatImpl {
                 return self();
             }
 
-            addMessages(assertThat(getSubject().getHost()).isNotBlank());
+            if (assertThat(getSubject().getHost()).isNotBlank().isInvalid()) {
+                addMessage("Subject does not have a host specified.");
+            }
 
             return self();
         }
 
-        default F hasNoAuthority() {
+        default F hasNoUserInfo() {
             if (getSubject() == null) {
                 return self();
             }
 
-            addMessages(assertThat(getSubject().getAuthority()).isBlank());
+            if (assertThat(getSubject().getUserInfo()).isBlank().isInvalid()) {
+                addMessage("Subject has an authority specified.");
+            }
 
             return self();
         }
@@ -130,8 +138,11 @@ class AssertThatImpl {
                 return self();
             }
 
-            addMessages(assertThat(getSubject().getScheme())
-                    .isOneOf("http", "https"));
+            var schemeVal = assertThat(getSubject().getScheme())
+                    .isOneOf("http", "https");
+            if (schemeVal.isInvalid()) {
+                addMessage("Scheme: " + schemeVal.getMessages().get(0));
+            }
 
             return self();
         }
