@@ -1,0 +1,9 @@
+GET http://{{host}}/rule
+Accept: application/json
+
+###
+GET http://{{host}}/documentContextSchema
+Accept: application/json
+
+###
+

@@ -3,11 +3,15 @@ package com.jamesstapleton.com.bems.boolexp;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.jamesstapleton.com.bems.Model;
 import com.jamesstapleton.com.bems.model.DocumentContext;
+import com.jamesstapleton.com.bems.utils.ModelValidator;
 import org.immutables.value.Value;
+import org.springframework.lang.NonNull;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static com.jamesstapleton.com.bems.utils.AssertThat.assertThat;
 
 @JsonDeserialize(builder = ImmutableRule.Builder.class)
 @Value.Immutable
@@ -34,6 +38,7 @@ public abstract class Rule {
         return ImmutableRule.of(Mode.DNF, Arrays.asList(terms));
     }
 
+    @NonNull
     @Value.Parameter
     public abstract Mode getMode();
 
@@ -45,6 +50,7 @@ public abstract class Rule {
         return terms.stream().allMatch(i -> i.matches(context));
     }
 
+    @NonNull
     @Value.Parameter
     public abstract List<List<Term>> getClauses();
 
@@ -55,6 +61,17 @@ public abstract class Rule {
         } else {
             return getClauses().stream()
                     .anyMatch(inner -> allMatches(inner, context));
+        }
+    }
+
+    @Value.Check
+    public void check() {
+        try (ModelValidator validator = new ModelValidator("Rule")) {
+            validator.validate("clauses",
+                    assertThat(getClauses())
+                            .isNotEmpty()
+                            .assertThatAll(term -> assertThat(term)
+                                    .isNotEmpty()));
         }
     }
 

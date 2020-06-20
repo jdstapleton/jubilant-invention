@@ -1,0 +1,6 @@
+POST http://{{host}}/rule
+Content-Type: application/json
+
+< ./request-form-data.json
+
+###

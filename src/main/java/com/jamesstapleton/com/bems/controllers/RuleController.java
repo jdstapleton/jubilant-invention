@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -24,11 +25,13 @@ public class RuleController {
         return sqs.findAll(pageable).map(i -> new RuleSummary(i.getId(), i.getName()));
     }
 
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public StoredQuery getStoredQuery(@PathVariable("id") String id) {
         return sqs.findById(id);
     }
 
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public StoredQuery createNewQuery(@RequestBody StoredQuery storedQuery) {
         return sqs.save(storedQuery);

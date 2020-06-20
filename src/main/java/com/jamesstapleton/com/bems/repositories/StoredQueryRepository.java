@@ -3,6 +3,7 @@ package com.jamesstapleton.com.bems.repositories;
 import com.jamesstapleton.com.bems.model.DocumentContext;
 import com.jamesstapleton.com.bems.model.StoredQuery;
 import com.jamesstapleton.com.bems.model.UserContext;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -15,6 +16,11 @@ import java.util.stream.Collectors;
 @Repository
 public class StoredQueryRepository {
     final Map<String, StoredQuery> queries = new HashMap<>();
+
+    @Autowired
+    public StoredQueryRepository() {
+
+    }
 
     public static Predicate<StoredQuery> filterForUser(UserContext userContext) {
         return i -> i.getMetadata().getVisibilities().stream()

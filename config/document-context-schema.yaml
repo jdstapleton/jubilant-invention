@@ -1,0 +1,39 @@
+---
+# This is a config file in yaml format, this way I can have comments.
+# This file is meant to be a service config not something that is posted to the
+# service.  But some of this is easier to be defined in a simple config file rather
+# then by code.
+context:
+  - field: food
+    type: SingleValue
+    # The food Enum expects values to be in all caps, so they lets Upper Case it
+    mappers:
+      - type: UCString
+  - field: expireAt
+    type: SingleValue
+    mappers:
+      - type: DateTimeMapper
+  - field: websiteDomain
+    type: List
+    mappers:
+      - type: ExtractReverseDotted
+      - type: PrefixRemapper
+        # Note these mappers are an ordered list, first match wins
+        mappers:
+          - com.kellogg: kellogg
+          - com.kraft: kraft
+          - com.cambells: cambell
+          - com.go.disney: disney
+          - com.go.abc: abc
+          - com.go: go
+  - field: category
+    type: List
+    mappers:
+      - type: UCString
+      # This uses a simple 'wildcard matcher' provided by spring
+      - type: SimpleRemapper
+        # Note these mappers are an ordered list, first match wins
+        mappers:
+          - "FAT*": FAT
+          - "*SUGAR*": SUGAR
+          - "*": OTHER
