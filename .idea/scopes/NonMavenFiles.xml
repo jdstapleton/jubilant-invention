@@ -1,0 +1,3 @@
+<component name="DependencyValidationManager">
+  <scope name="NonMavenFiles" pattern="!file[bool-expression-matcher-service]:.mvn//*&amp;&amp;!file:mvnw&amp;&amp;!file:mvnw.cmd" />
+</component>

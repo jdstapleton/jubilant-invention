@@ -1,6 +1,0 @@
-POST http://{{host}}/rule
-Content-Type: application/json
-
-< ./rules/00-rule.json
-
-###

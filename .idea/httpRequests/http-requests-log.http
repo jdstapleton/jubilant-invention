@@ -1,0 +1,1050 @@
+POST http://localhost:8080/rule
+Content-Type: application/json
+X-REMOTE-USER: admin
+
+{
+  "id": "id-xyz",
+  "name": "xyz",
+  "rule": {
+    "mode": "CNF",
+    "clauses": [
+      [
+        {
+          "type": "StringTerm",
+          "field": "b",
+          "value": "pepper",
+          "op": "EQ"
+        }
+      ],
+      [
+        {
+          "type": "StringTerm",
+          "field": "b",
+          "value": [
+            "cheese",
+            "eggs"
+          ],
+          "op": "EQ"
+        },
+        {
+          "type": "StringTerm",
+          "field": "a",
+          "value": "hello",
+          "op": "EQ"
+        },
+        {
+          "type": "DateTimeTerm",
+          "field": "date",
+          "value": "2020-04-01T16:08:00Z",
+          "op": "AFTER"
+        }
+      ]
+    ]
+  },
+  "subject": {
+    "title": "Some Title",
+    "description": "Some description",
+    "targetUri": "https://www.google.com"
+  },
+  "metadata": {
+    "visibilities": [
+      "C"
+    ]
+  }
+}
+
+<> 2020-06-22T084924.200.json
+
+###
+
+POST http://localhost:8080/rule
+Content-Type: application/json
+
+{
+  "id": "id-xyz",
+  "name": "xyz",
+  "rule": {
+    "mode": "CNF",
+    "clauses": [
+      [
+        {
+          "type": "StringTerm",
+          "field": "b",
+          "value": "pepper",
+          "op": "EQ"
+        }
+      ],
+      [
+        {
+          "type": "StringTerm",
+          "field": "b",
+          "value": [
+            "cheese",
+            "eggs"
+          ],
+          "op": "EQ"
+        },
+        {
+          "type": "StringTerm",
+          "field": "a",
+          "value": "hello",
+          "op": "EQ"
+        },
+        {
+          "type": "DateTimeTerm",
+          "field": "date",
+          "value": "2020-04-01T16:08:00Z",
+          "op": "AFTER"
+        }
+      ]
+    ]
+  },
+  "subject": {
+    "title": "Some Title",
+    "description": "Some description",
+    "targetUri": "https://www.google.com"
+  },
+  "metadata": {
+    "visibilities": [
+      "C"
+    ]
+  }
+}
+
+<> 2020-06-22T084729.403.json
+
+###
+
+POST http://localhost:8080/rule
+Content-Type: application/json
+
+{
+  "id": "id-xyz",
+  "name": "xyz",
+  "rule": {
+    "mode": "CNF",
+    "clauses": [
+      [
+        {
+          "type": "StringTerm",
+          "field": "b",
+          "value": "pepper",
+          "op": "EQ"
+        }
+      ],
+      [
+        {
+          "type": "StringTerm",
+          "field": "b",
+          "value": [
+            "cheese",
+            "eggs"
+          ],
+          "op": "EQ"
+        },
+        {
+          "type": "StringTerm",
+          "field": "a",
+          "value": "hello",
+          "op": "EQ"
+        },
+        {
+          "type": "DateTimeTerm",
+          "field": "date",
+          "value": "2020-04-01T16:08:00Z",
+          "op": "AFTER"
+        }
+      ]
+    ]
+  },
+  "subject": {
+    "title": "Some Title",
+    "description": "Some description",
+    "targetUri": "https://www.google.com"
+  },
+  "metadata": {
+    "visibilities": [
+      "C"
+    ]
+  }
+}
+
+###
+
+POST http://localhost:8080/rule
+Content-Type: application/json
+
+{
+  "id": "id-xyz",
+  "name": "xyz",
+  "rule": {
+    "mode": "CNF",
+    "clauses": [
+      [
+        {
+          "type": "StringTerm",
+          "field": "b",
+          "value": "pepper",
+          "op": "EQ"
+        }
+      ],
+      [
+        {
+          "type": "StringTerm",
+          "field": "b",
+          "value": [
+            "cheese",
+            "eggs"
+          ],
+          "op": "EQ"
+        },
+        {
+          "type": "StringTerm",
+          "field": "a",
+          "value": "hello",
+          "op": "EQ"
+        },
+        {
+          "type": "DateTimeTerm",
+          "field": "date",
+          "value": "2020-04-01T16:08:00Z",
+          "op": "AFTER"
+        }
+      ]
+    ]
+  },
+  "subject": {
+    "title": "Some Title",
+    "description": "Some description",
+    "targetUri": "https://www.google.com"
+  },
+  "metadata": {
+    "visibilities": [
+      "C"
+    ]
+  }
+}
+
+###
+
+POST http://localhost:8080/rule
+Content-Type: application/json
+
+{
+  "id": "id-xyz",
+  "name": "xyz",
+  "rule": {
+    "mode": "CNF",
+    "clauses": [
+      [
+        {
+          "type": "StringTerm",
+          "field": "b",
+          "value": "pepper",
+          "op": "EQ"
+        }
+      ],
+      [
+        {
+          "type": "StringTerm",
+          "field": "b",
+          "value": [
+            "cheese",
+            "eggs"
+          ],
+          "op": "EQ"
+        },
+        {
+          "type": "StringTerm",
+          "field": "a",
+          "value": "hello",
+          "op": "EQ"
+        },
+        {
+          "type": "DateTimeTerm",
+          "field": "date",
+          "value": "2020-04-01T16:08:00Z",
+          "op": "AFTER"
+        }
+      ]
+    ]
+  },
+  "subject": {
+    "title": "Some Title",
+    "description": "Some description",
+    "targetUri": "https://www.google.com"
+  },
+  "metadata": {
+    "visibilities": [
+      "C"
+    ]
+  }
+}
+
+###
+
+POST http://localhost:8080/rule
+Content-Type: application/json
+
+{
+  "id": "id-xyz",
+  "name": "xyz",
+  "rule": {
+    "mode": "CNF",
+    "clauses": [
+      [
+        {
+          "type": "StringTerm",
+          "field": "b",
+          "value": "pepper",
+          "op": "EQ"
+        }
+      ],
+      [
+        {
+          "type": "StringTerm",
+          "field": "b",
+          "value": [
+            "cheese",
+            "eggs"
+          ],
+          "op": "EQ"
+        },
+        {
+          "type": "StringTerm",
+          "field": "a",
+          "value": "hello",
+          "op": "EQ"
+        },
+        {
+          "type": "DateTimeTerm",
+          "field": "date",
+          "value": "2020-04-01T16:08:00Z",
+          "op": "AFTER"
+        }
+      ]
+    ]
+  },
+  "subject": {
+    "title": "Some Title",
+    "description": "Some description",
+    "targetUri": "https://www.google.com"
+  },
+  "metadata": {
+    "visibilities": [
+      "C"
+    ]
+  }
+}
+
+###
+
+POST http://localhost:8080/rule
+Content-Type: application/json
+
+{
+  "id": "id-xyz",
+  "name": "xyz",
+  "rule": {
+    "mode": "CNF",
+    "clauses": [
+      [
+        {
+          "type": "StringTerm",
+          "field": "b",
+          "value": "pepper",
+          "op": "EQ"
+        }
+      ],
+      [
+        {
+          "type": "StringTerm",
+          "field": "b",
+          "value": [
+            "cheese",
+            "eggs"
+          ],
+          "op": "EQ"
+        },
+        {
+          "type": "StringTerm",
+          "field": "a",
+          "value": "hello",
+          "op": "EQ"
+        },
+        {
+          "type": "DateTimeTerm",
+          "field": "date",
+          "value": "2020-04-01T16:08:00Z",
+          "op": "AFTER"
+        }
+      ]
+    ]
+  },
+  "subject": {
+    "title": "Some Title",
+    "description": "Some description",
+    "targetUri": "https://www.google.com"
+  },
+  "metadata": {
+    "visibilities": [
+      "C"
+    ]
+  }
+}
+
+###
+
+POST http://localhost:8080/rule
+Content-Type: application/json
+
+{
+  "id": "id-xyz",
+  "name": "xyz",
+  "rule": {
+    "mode": "CNF",
+    "clauses": [
+      [
+        {
+          "type": "StringTerm",
+          "field": "b",
+          "value": "pepper",
+          "op": "EQ"
+        }
+      ],
+      [
+        {
+          "type": "StringTerm",
+          "field": "b",
+          "value": [
+            "cheese",
+            "eggs"
+          ],
+          "op": "EQ"
+        },
+        {
+          "type": "StringTerm",
+          "field": "a",
+          "value": "hello",
+          "op": "EQ"
+        },
+        {
+          "type": "DateTimeTerm",
+          "field": "date",
+          "value": "2020-04-01T16:08:00Z",
+          "op": "AFTER"
+        }
+      ]
+    ]
+  },
+  "subject": {
+    "title": "Some Title",
+    "description": "Some description",
+    "targetUri": "https://www.google.com"
+  },
+  "metadata": {
+    "visibilities": [
+      "C"
+    ]
+  }
+}
+
+###
+
+POST http://localhost:8080/rule
+Content-Type: application/json
+
+{
+  "id": "id-xyz",
+  "name": "xyz",
+  "rule": {
+    "mode": "CNF",
+    "clauses": [
+      [
+        {
+          "type": "StringTerm",
+          "field": "b",
+          "value": "pepper",
+          "op": "EQ"
+        }
+      ],
+      [
+        {
+          "type": "StringTerm",
+          "field": "b",
+          "value": [
+            "cheese",
+            "eggs"
+          ],
+          "op": "EQ"
+        },
+        {
+          "type": "StringTerm",
+          "field": "a",
+          "value": "hello",
+          "op": "EQ"
+        },
+        {
+          "type": "DateTimeTerm",
+          "field": "date",
+          "value": "2020-04-01T16:08:00Z",
+          "op": "AFTER"
+        }
+      ]
+    ]
+  },
+  "subject": {
+    "title": "Some Title",
+    "description": "Some description",
+    "targetUri": "https://www.google.com"
+  },
+  "metadata": {
+    "visibilities": [
+      "C"
+    ]
+  }
+}
+
+###
+
+POST http://localhost:8080/rule
+Content-Type: application/json
+
+{
+  "id": "id-xyz",
+  "name": "xyz",
+  "rule": {
+    "mode": "CNF",
+    "clauses": [
+      [
+        {
+          "type": "StringTerm",
+          "field": "b",
+          "value": "pepper",
+          "op": "EQ"
+        }
+      ],
+      [
+        {
+          "type": "StringTerm",
+          "field": "b",
+          "value": [
+            "cheese",
+            "eggs"
+          ],
+          "op": "EQ"
+        },
+        {
+          "type": "StringTerm",
+          "field": "a",
+          "value": "hello",
+          "op": "EQ"
+        },
+        {
+          "type": "DateTimeTerm",
+          "field": "date",
+          "value": "2020-04-01T16:08:00Z",
+          "op": "AFTER"
+        }
+      ]
+    ]
+  },
+  "subject": {
+    "title": "Some Title",
+    "description": "Some description",
+    "targetUri": "https://www.google.com"
+  },
+  "metadata": {
+    "visibilities": [
+      "C"
+    ]
+  }
+}
+
+###
+
+POST http://localhost:8080/rule
+Content-Type: application/json
+
+{
+  "id": "id-xyz",
+  "name": "xyz",
+  "rule": {
+    "mode": "CNF",
+    "clauses": [
+      [
+        {
+          "type": "StringTerm",
+          "field": "b",
+          "value": "pepper",
+          "op": "EQ"
+        }
+      ],
+      [
+        {
+          "type": "StringTerm",
+          "field": "b",
+          "value": [
+            "cheese",
+            "eggs"
+          ],
+          "op": "EQ"
+        },
+        {
+          "type": "StringTerm",
+          "field": "a",
+          "value": "hello",
+          "op": "EQ"
+        },
+        {
+          "type": "DateTimeTerm",
+          "field": "date",
+          "value": "2020-04-01T16:08:00Z",
+          "op": "AFTER"
+        }
+      ]
+    ]
+  },
+  "subject": {
+    "title": "Some Title",
+    "description": "Some description",
+    "targetUri": "https://www.google.com"
+  },
+  "metadata": {
+    "visibilities": [
+      "C"
+    ]
+  }
+}
+
+###
+
+POST http://localhost:8080/rule
+Content-Type: application/json
+
+{
+  "id": "id-xyz",
+  "name": "xyz",
+  "rule": {
+    "mode": "CNF",
+    "clauses": [
+      [
+        {
+          "type": "StringTerm",
+          "field": "b",
+          "value": "pepper",
+          "op": "EQ"
+        }
+      ],
+      [
+        {
+          "type": "StringTerm",
+          "field": "b",
+          "value": [
+            "cheese",
+            "eggs"
+          ],
+          "op": "EQ"
+        },
+        {
+          "type": "StringTerm",
+          "field": "a",
+          "value": "hello",
+          "op": "EQ"
+        },
+        {
+          "type": "DateTimeTerm",
+          "field": "date",
+          "value": "2020-04-01T16:08:00Z",
+          "op": "AFTER"
+        }
+      ]
+    ]
+  },
+  "subject": {
+    "title": "Some Title",
+    "description": "Some description",
+    "targetUri": "https://www.google.com"
+  },
+  "metadata": {
+    "visibilities": [
+      "C"
+    ]
+  }
+}
+
+###
+
+POST http://localhost:8080/rule
+Content-Type: application/json
+
+{
+  "id": "id-xyz",
+  "name": "xyz",
+  "rule": {
+    "mode": "CNF",
+    "clauses": [
+      [
+        {
+          "type": "StringTerm",
+          "field": "b",
+          "value": "pepper",
+          "op": "EQ"
+        }
+      ],
+      [
+        {
+          "type": "StringTerm",
+          "field": "b",
+          "value": [
+            "cheese",
+            "eggs"
+          ],
+          "op": "EQ"
+        },
+        {
+          "type": "StringTerm",
+          "field": "a",
+          "value": "hello",
+          "op": "EQ"
+        },
+        {
+          "type": "DateTimeTerm",
+          "field": "date",
+          "value": "2020-04-01T16:08:00Z",
+          "op": "AFTER"
+        }
+      ]
+    ]
+  },
+  "subject": {
+    "title": "Some Title",
+    "description": "Some description",
+    "targetUri": "https://www.google.com"
+  },
+  "metadata": {
+    "visibilities": [
+      "C"
+    ]
+  }
+}
+
+###
+
+POST http://localhost:8080/rule
+Content-Type: application/json
+
+{
+  "id": "id-xyz",
+  "name": "xyz",
+  "rule": {
+    "mode": "CNF",
+    "clauses": [
+      [
+        {
+          "type": "StringTerm",
+          "field": "b",
+          "value": "pepper",
+          "op": "EQ"
+        }
+      ],
+      [
+        {
+          "type": "StringTerm",
+          "field": "b",
+          "value": [
+            "cheese",
+            "eggs"
+          ],
+          "op": "EQ"
+        },
+        {
+          "type": "StringTerm",
+          "field": "a",
+          "value": "hello",
+          "op": "EQ"
+        },
+        {
+          "type": "DateTimeTerm",
+          "field": "date",
+          "value": "2020-04-01T16:08:00Z",
+          "op": "AFTER"
+        }
+      ]
+    ]
+  },
+  "subject": {
+    "title": "Some Title",
+    "description": "Some description",
+    "targetUri": "https://www.google.com"
+  },
+  "metadata": {
+    "visibilities": [
+      "C"
+    ]
+  }
+}
+
+###
+
+POST http://localhost:8080/rule
+Content-Type: application/json
+
+{
+  "id": "id-xyz",
+  "name": "xyz",
+  "rule": {
+    "mode": "CNF",
+    "clauses": [
+      [
+        {
+          "type": "StringTerm",
+          "field": "b",
+          "value": "pepper",
+          "op": "EQ"
+        }
+      ],
+      [
+        {
+          "type": "StringTerm",
+          "field": "b",
+          "value": [
+            "cheese",
+            "eggs"
+          ],
+          "op": "EQ"
+        },
+        {
+          "type": "StringTerm",
+          "field": "a",
+          "value": "hello",
+          "op": "EQ"
+        },
+        {
+          "type": "DateTimeTerm",
+          "field": "date",
+          "value": "2020-04-01T16:08:00Z",
+          "op": "AFTER"
+        }
+      ]
+    ]
+  },
+  "subject": {
+    "title": "Some Title",
+    "description": "Some description",
+    "targetUri": "https://www.google.com"
+  },
+  "metadata": {
+    "visibilities": [
+      "C"
+    ]
+  }
+}
+
+###
+
+POST http://localhost:8080/rule
+Content-Type: application/json
+
+{
+  "id": "id-xyz",
+  "name": "xyz",
+  "rule": {
+    "mode": "CNF",
+    "clauses": [
+      [
+        {
+          "type": "StringTerm",
+          "field": "b",
+          "value": "pepper",
+          "op": "EQ"
+        }
+      ],
+      [
+        {
+          "type": "StringTerm",
+          "field": "b",
+          "value": [
+            "cheese",
+            "eggs"
+          ],
+          "op": "EQ"
+        },
+        {
+          "type": "StringTerm",
+          "field": "a",
+          "value": "hello",
+          "op": "EQ"
+        },
+        {
+          "type": "DateTimeTerm",
+          "field": "date",
+          "value": "2020-04-01T16:08:00Z",
+          "op": "AFTER"
+        }
+      ]
+    ]
+  },
+  "subject": {
+    "title": "Some Title",
+    "description": "Some description",
+    "targetUri": "https://www.google.com"
+  },
+  "metadata": {
+    "visibilities": [
+      "C"
+    ]
+  }
+}
+
+###
+
+POST http://localhost:8080/rule
+Content-Type: application/json
+
+{
+  "id": "id-xyz",
+  "name": "xyz",
+  "rule": {
+    "mode": "CNF",
+    "clauses": [
+      [
+        {
+          "type": "StringTerm",
+          "field": "b",
+          "value": "pepper",
+          "op": "EQ"
+        }
+      ],
+      [
+        {
+          "type": "StringTerm",
+          "field": "b",
+          "value": [
+            "cheese",
+            "eggs"
+          ],
+          "op": "EQ"
+        },
+        {
+          "type": "StringTerm",
+          "field": "a",
+          "value": "hello",
+          "op": "EQ"
+        },
+        {
+          "type": "DateTimeTerm",
+          "field": "date",
+          "value": "2020-04-01T16:08:00Z",
+          "op": "AFTER"
+        }
+      ]
+    ]
+  },
+  "subject": {
+    "title": "Some Title",
+    "description": "Some description",
+    "targetUri": "https://www.google.com"
+  },
+  "metadata": {
+    "visibilities": [
+      "C"
+    ]
+  }
+}
+
+###
+
+POST http://localhost:8080/rule
+Content-Type: application/json
+
+{
+  "id": "id-xyz",
+  "name": "xyz",
+  "rule": {
+    "mode": "CNF",
+    "clauses": [
+      [
+        {
+          "type": "StringTerm",
+          "field": "b",
+          "value": "pepper",
+          "op": "EQ"
+        }
+      ],
+      [
+        {
+          "type": "StringTerm",
+          "field": "b",
+          "value": [
+            "cheese",
+            "eggs"
+          ],
+          "op": "EQ"
+        },
+        {
+          "type": "StringTerm",
+          "field": "a",
+          "value": "hello",
+          "op": "EQ"
+        },
+        {
+          "type": "DateTimeTerm",
+          "field": "date",
+          "value": "2020-04-01T16:08:00Z",
+          "op": "AFTER"
+        }
+      ]
+    ]
+  },
+  "subject": {
+    "title": "Some Title",
+    "description": "Some description",
+    "targetUri": "https://www.google.com"
+  },
+  "metadata": {
+    "visibilities": [
+      "C"
+    ]
+  }
+}
+
+<> 2020-06-20T062326.403.json
+
+###
+
+GET http://localhost:8080/rule
+Accept: application/json
+
+<> 2020-06-20T113607.200.json
+
+###
+
+GET http://localhost:8080/documentContextSchema
+Accept: application/json
+
+<> 2020-06-20T113438.200.json
+
+###
+
+GET http://localhost:8080/rule/1234
+Accept: application/json
+
+<> 2020-06-07T105218.404.json
+
+###
+
+GET http://localhost:8080/rule
+Accept: application/json
+
+<> 2020-06-07T105127.200.json
+
+###
+
+GET http://localhost:8080/rule
+Accept: application/json
+
+<> 2020-06-07T105035.200.json
+
+###
+

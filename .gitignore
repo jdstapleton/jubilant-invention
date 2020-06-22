@@ -14,10 +14,17 @@ target/
 .sts4-cache
 
 ### IntelliJ IDEA ###
-.idea
+.idea/*.xml
 *.iws
 *.iml
 *.ipr
+.idea/libraries
+.idea/dictionaries/*
+!.idea/dictionaries/project.xml
+# ignore saved cookies
+.idea/httpRequests/*.cookies
+# ignore saved responses
+.idea/httpRequests/2*T*.*.json
 
 ### NetBeans ###
 /nbproject/private/

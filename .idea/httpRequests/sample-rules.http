@@ -1,3 +1,7 @@
+POST http://{{host}}/rule
+Content-Type: application/json
+X-REMOTE-USER: admin
+
 {
   "id": "id-xyz",
   "name": "xyz",
@@ -48,3 +52,5 @@
     ]
   }
 }
+
+###
